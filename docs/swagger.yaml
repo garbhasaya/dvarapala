@@ -1,0 +1,273 @@
+basePath: /
+definitions:
+  dvarapala_internal_platform_render.Response:
+    properties:
+      data: {}
+      error:
+        type: string
+      status:
+        type: integer
+    type: object
+  internal_user.AuthRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  internal_user.AuthResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/internal_user.User'
+    type: object
+  internal_user.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - firstname
+    - lastname
+    - password
+    type: object
+  internal_user.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      status:
+        type: integer
+    type: object
+  internal_user.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      id:
+        type: integer
+      lastname:
+        type: string
+      password:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a microservice for user management.
+  title: Dvarapala API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      description: Get a list of all registered users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/internal_user.User'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+      summary: List all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user with the provided details
+      parameters:
+      - description: User details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/internal_user.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/internal_user.User'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+      summary: Create a new user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: Remove a user from the system by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+      summary: Delete user
+      tags:
+      - users
+    get:
+      description: Get a single user by their unique ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/internal_user.User'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+      summary: Get user by ID
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Update an existing user's details
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated user details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/internal_user.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/internal_user.User'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+      summary: Update user
+      tags:
+      - users
+  /users/auth:
+    post:
+      consumes:
+      - application/json
+      description: Login with email and password to receive a JWT token
+      parameters:
+      - description: Login credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/internal_user.AuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/internal_user.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+      summary: Authenticate user
+      tags:
+      - users
+swagger: "2.0"

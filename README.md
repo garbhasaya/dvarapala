@@ -119,6 +119,7 @@ The project uses Docker and a Makefile for development.
 - `make swag`: Generate Swagger documentation.
 - `make shell`: Open an interactive shell inside the API container.
 - `make migrate-gen name=migration_name`: Generate a new versioned migration file.
+- `make migrate-apply`: Apply all pending migrations to the database.
 - `make clean`: Deep clean of containers, images, and volumes.
 
 ## Database Migrations
@@ -151,17 +152,22 @@ make migrate-gen name=add_new_field_to_user
 This will create new `.sql` files in `ent/migrate/migrations/`.
 
 ### 4. Apply Migrations
-In the current development setup, the application automatically applies migrations on startup using `client.Schema.Create` in `internal/db/sqlite.go`. Simply restart the service:
+You can manually apply migrations to the database using:
+```bash
+make migrate-apply
+```
+
+Additionally, in the current development setup, the application automatically applies migrations on startup using `client.Schema.Create` in `internal/db/sqlite.go`. You can restart the service to trigger this:
 ```bash
 make restart
 ```
 
 ## Database Persistence
 
-The SQLite database is stored at `/app/data/dvarapala.db` inside the container. This path is persisted using a Docker named volume called `data`.
+The SQLite database is stored at `/app/data/dvarapala.db` inside the container. This path is persisted using a bind mount to the local `./data` directory in the project root.
 
+- **Host Path**: `./data/dvarapala.db`
 - **Container Path**: `/app/data/dvarapala.db`
-- **Volume Name**: `data`
 - **Environment Variable**: `DB_PATH`
 
 The database initialization is fully aligned with the Ent migration setup. On every startup, the application verifies the schema against the generated Ent code and applies any necessary changes to the SQLite file, ensuring the physical database always matches your versioned migration files.
@@ -178,6 +184,11 @@ The database initialization is fully aligned with the Ent migration setup. On ev
 - Status - smallint - 0 or 1
 - Created at
 - Updated at
+
+## Service URLs
+
+- **API Gateway**: [http://localhost:8080](http://localhost:8080)
+- **Swagger UI**: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
 
 ## API endpoints
 

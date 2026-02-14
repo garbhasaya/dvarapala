@@ -4,11 +4,17 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - data:/app/data
+      - ./data:/app/data
     environment:
       - GO_ENV=development
       - DB_PATH=/app/data/dvarapala.db
     restart: always
 
-volumes:
-  data:
+  atlas:
+    image: arigaio/atlas
+    volumes:
+      - .:/app
+      - ./data:/data
+    working_dir: /app
+
+# No volumes section needed for bind mounts

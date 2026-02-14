@@ -28,10 +28,8 @@ lint:
 	docker run --rm -v $(shell pwd):/app -w /app golangci/golangci-lint:latest golangci-lint run -v
 
 # Generate Swagger documentation
-# Note: This assumes swag is installed in the container or runs via a separate image
 swag:
-	docker-compose run --rm api go install github.com/swaggo/swag/cmd/swag@latest
-	docker-compose run --rm api swag init -g cmd/api/main.go
+	docker run --rm -v $(shell pwd):/app -w /app golang:latest sh -c "go install github.com/swaggo/swag/cmd/swag@latest && swag init -g cmd/api/main.go --parseDependency --parseInternal"
 
 # Open a shell in the running api container
 shell:
@@ -44,6 +42,12 @@ migrate-gen:
 		-e CGO_CFLAGS="-D_LARGEFILE64_SOURCE" \
 		golang:1.26-alpine \
 		sh -c "apk add --no-cache build-base && go run -mod=mod ent/migrate/main.go $(name)"
+
+migrate-apply:
+	docker-compose run --rm atlas migrate apply \
+		--url "sqlite:///data/dvarapala.db?_fk=1" \
+		--dir "file://ent/migrate/migrations" \
+		--allow-dirty
 
 # Clean up containers, images, and volumes
 clean:

@@ -1,0 +1,46 @@
+package user
+
+import (
+	"time"
+)
+
+// User represents the domain model for a user.
+type User struct {
+	ID        int       `json:"id"`
+	Firstname string    `json:"firstname"`
+	Lastname  string    `json:"lastname"`
+	Email     string    `json:"email"`
+	Password  string    `json:"password,omitempty"`
+	Status    int8      `json:"status"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// CreateUserRequest defines the payload for creating a user.
+type CreateUserRequest struct {
+	Firstname string `json:"firstname" validate:"required"`
+	Lastname  string `json:"lastname" validate:"required"`
+	Email     string `json:"email" validate:"required,email"`
+	Password  string `json:"password" validate:"required,min=8"`
+}
+
+// UpdateUserRequest defines the payload for updating a user.
+type UpdateUserRequest struct {
+	Firstname *string `json:"firstname"`
+	Lastname  *string `json:"lastname"`
+	Email     *string `json:"email" validate:"omitempty,email"`
+	Password  *string `json:"password" validate:"omitempty,min=8"`
+	Status    *int8   `json:"status"`
+}
+
+// AuthRequest defines the payload for user authentication.
+type AuthRequest struct {
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
+}
+
+// AuthResponse defines the response after successful authentication.
+type AuthResponse struct {
+	Token string `json:"token"`
+	User  User   `json:"user"`
+}
