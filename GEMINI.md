@@ -77,6 +77,14 @@ To ensure codebase health and consistency, the following steps **must** be compl
 - `make down`: Stop services.
 - `make deps-upgrade`: Update Go dependencies using a Docker container.
 - `make fmt`: Format code and organize imports using `goimports`.
+- `make tidy`: Clean up `go.mod` and `go.sum` files.
+- `make vet`: Run `go vet` for static analysis.
+- `make generate`: Run `go generate` for all packages.
+- `make vendor`: Create and update the `vendor` directory.
+- `make coverage`: Generate an HTML test coverage report.
+- `make coverage-view`: Open the HTML coverage report in your default browser.
+- `make build-local`: Build the API binary on the host machine.
+- `make help`: Display all available Makefile commands.
 - `make test`: Run unit tests in a fresh Go container.
 - `make logs`: Follow container logs.
 - `make swag`: Regenerate Swagger documentation.

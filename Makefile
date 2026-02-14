@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs ps test lint swag clean shell
+.PHONY: build up down restart logs ps test lint swag clean shell help tidy vet generate vendor coverage coverage-view build-local
 
 # Docker Compose commands
 build:
@@ -43,6 +43,42 @@ swag:
 shell:
 	docker-compose exec api sh
 
+# Clean up go.mod and go.sum
+tidy:
+	docker run --rm -v $(shell pwd):/app -w /app golang:1.26-alpine go mod tidy
+
+# Run go vet for static analysis
+vet:
+	docker run --rm -v $(shell pwd):/app -w /app golang:1.26-alpine go vet ./...
+
+# Run go generate for code generation
+generate:
+	docker run --rm -v $(shell pwd):/app -w /app \
+		-e CGO_ENABLED=1 \
+		-e CGO_CFLAGS="-D_LARGEFILE64_SOURCE" \
+		golang:1.26-alpine \
+		sh -c "apk add --no-cache build-base && go generate ./..."
+
+# Create vendor directory
+vendor:
+	docker run --rm -v $(shell pwd):/app -w /app golang:1.26-alpine go mod vendor
+
+# Generate test coverage report
+coverage:
+	docker run --rm -v $(shell pwd):/app -w /app \
+		-e CGO_ENABLED=1 \
+		-e CGO_CFLAGS="-D_LARGEFILE64_SOURCE" \
+		golang:1.26-alpine \
+		sh -c "apk add --no-cache build-base && go test -coverprofile=coverage.out ./... && go tool cover -html=coverage.out -o coverage.html"
+
+# Open the coverage report in a browser
+coverage-view:
+	xdg-open coverage.html
+
+# Build the binary locally (requires Go on host)
+build-local:
+	go build -o bin/api ./cmd/api/main.go
+
 # Update Go dependencies
 deps-upgrade:
 	docker run --rm -v $(shell pwd):/app -w /app \
@@ -75,3 +111,31 @@ migrate-apply:
 # Clean up containers, images, and volumes
 clean:
 	docker-compose down --rmi all --volumes --remove-orphans
+
+# Show help message
+help:
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@echo "  build         Build Docker images"
+	@echo "  up            Start services in background"
+	@echo "  down          Stop services"
+	@echo "  restart       Restart services"
+	@echo "  logs          Follow container logs"
+	@echo "  ps            List running containers"
+	@echo "  test          Run unit tests"
+	@echo "  fmt           Format code (goimports)"
+	@echo "  lint          Run linter"
+	@echo "  swag          Generate Swagger docs"
+	@echo "  tidy          Clean up go.mod"
+	@echo "  vet           Run go vet"
+	@echo "  generate      Run go generate"
+	@echo "  vendor        Create vendor directory"
+	@echo "  coverage      Generate test coverage report"
+	@echo "  coverage-view Open test coverage report"
+	@echo "  deps-upgrade  Upgrade Go dependencies"
+	@echo "  go-upgrade    Upgrade Go version (use version=1.x)"
+	@echo "  migrate-gen   Generate migration (use name=...)"
+	@echo "  migrate-apply Apply migrations"
+	@echo "  clean         Deep clean containers/images"
+	@echo "  help          Show this help message"

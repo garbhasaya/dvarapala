@@ -117,6 +117,14 @@ The project uses Docker and a Makefile for development.
 - `make deps-upgrade`: Update all Go dependencies to their latest versions and run tests.
 - `make go-upgrade version=1.x`: Upgrade the Go version across the project (go.mod, Dockerfile, Makefile) and rebuild.
 - `make fmt`: Format code and organize imports using `goimports`.
+- `make tidy`: Clean up `go.mod` and `go.sum` files.
+- `make vet`: Run `go vet` for static analysis.
+- `make generate`: Run `go generate` for all packages.
+- `make vendor`: Create and update the `vendor` directory.
+- `make coverage`: Generate an HTML test coverage report.
+- `make coverage-view`: Open the HTML coverage report in your default browser.
+- `make build-local`: Build the API binary on the host machine.
+- `make help`: Display all available Makefile commands.
 - `make test`: Run all Go tests inside the container.
 - `make lint`: Run `golangci-lint` using a dedicated Docker image.
 - `make swag`: Generate Swagger documentation.
