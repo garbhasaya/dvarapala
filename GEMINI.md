@@ -75,16 +75,16 @@ Dvarapala is a microservice for user management, providing RESTful APIs for auth
 
 ### Mandatory Workflow for Every Change
 To ensure codebase health and consistency, the following steps **must** be completed for every modification or new feature:
-1.  **Structured Logging**: Add or update structured logging (using `slog`) to capture important events, business logic milestones, and error conditions.
-2.  **Write Unit Tests**: Every new feature or bug fix must include corresponding unit tests (e.g., `*_test.go`).
-3.  **Update Makefile**: If new development commands are required, add them to the `Makefile` and update the documentation accordingly.
-4.  **Run Formatter**: Ensure code style and imports are consistent by running `make fmt`.
-5.  **Run Linter**: Ensure code quality by running `make lint` after code and test changes.
-6.  **Update Swagger Documentation**: If any API endpoints are added or modified, regenerate documentation using `make swag`.
-7.  **Update README.md**: Ensure any new features, endpoints, or configuration changes are documented in `README.md`.
-8.  **Update GEMINI.md**: Ensure this project guide is updated to reflect any changes in architecture, workflows, or documentation standards.
-9.  **Run All Tests**: Verify that all tests pass by running `make test`.
-10. **Follow Naming Conventions**: Adhere to the project's naming conventions for packages, files, variables, and API components as defined in this document.
+1. **Follow Naming Conventions**: Adhere to the project's naming conventions for packages, files, variables, and API components as defined in this document.
+2.  **Structured Logging**: Add or update structured logging (using `slog`) to capture important events, business logic milestones, and error conditions.
+3.  **Write Unit Tests**: Every new feature or bug fix must include corresponding unit tests (e.g., `*_test.go`).
+4.  **Update Makefile**: If new development commands are required, add them to the `Makefile` and update the documentation accordingly.
+5.  **Run Formatter**: Ensure code style and imports are consistent by running `make fmt`.
+6.  **Run Linter**: Ensure code quality by running `make lint` after code and test changes.
+7.  **Update Swagger Documentation**: If any API endpoints are added or modified, regenerate documentation using `make swag`.
+8.  **Update README.md**: Ensure any new features, endpoints, or configuration changes are documented in `README.md`.
+9.  **Update GEMINI.md**: Ensure this project guide is updated to reflect any changes in architecture, workflows, or documentation standards.
+10.  **Run All Tests**: Verify that all tests pass by running `make test`.
 
 ### Common Commands (Makefile)
 - `make build`: Build Docker images.
