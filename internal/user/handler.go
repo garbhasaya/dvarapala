@@ -43,7 +43,7 @@ func (h *UserHandler) Routes(jwtManager *auth.JWTManager) chi.Router {
 
 		r.Route("/{id}", func(r chi.Router) {
 			r.Get("/", h.GetUserByID)
-			r.Post("/", h.UpdateUser) // README said POST for update
+			r.Put("/", h.UpdateUser)
 			r.Delete("/", h.DeleteUser)
 		})
 	})
@@ -152,7 +152,7 @@ func (h *UserHandler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} render.Response
 // @Failure 500 {object} render.Response
 // @Security Bearer
-// @Router /users/{id} [post]
+// @Router /users/{id} [put]
 func (h *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)

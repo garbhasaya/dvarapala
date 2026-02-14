@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs ps test lint swag clean shell help tidy vet generate vendor coverage coverage-view build-local
+.PHONY: build up down restart refresh logs ps test lint swag clean shell help tidy vet generate vendor coverage coverage-view build-local
 
 # Docker Compose commands
 build:
@@ -12,6 +12,8 @@ down:
 
 restart:
 	docker-compose restart
+
+refresh: down swag build up
 
 logs:
 	docker-compose logs -f
@@ -129,6 +131,7 @@ help:
 	@echo "  up            Start services in background"
 	@echo "  down          Stop services"
 	@echo "  restart       Restart services"
+	@echo "  refresh       Refresh the application (down, build, swag, up)"
 	@echo "  logs          Follow container logs"
 	@echo "  ps            List running containers"
 	@echo "  test          Run unit tests"

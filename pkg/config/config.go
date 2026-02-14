@@ -15,6 +15,12 @@ type Config struct {
 	DB          DatabaseConfig `mapstructure:"DB"`
 	Log         LogConfig
 	Auth        AuthConfig
+	CORS        CORSConfig
+}
+
+// CORSConfig holds the CORS-specific configuration.
+type CORSConfig struct {
+	AllowedOrigins []string `mapstructure:"ALLOWED_ORIGINS"`
 }
 
 // ServerConfig holds the server-specific configuration.
@@ -57,6 +63,7 @@ func Load() (*Config, error) {
 	v.SetDefault("LOG.DIR", "log")
 	v.SetDefault("AUTH.JWT_SECRET", "a-very-secure-and-shared-secret-key")
 	v.SetDefault("AUTH.JWT_EXPIRY", 24*time.Hour)
+	v.SetDefault("CORS.ALLOWED_ORIGINS", []string{"*"})
 
 	// Environment variables
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))

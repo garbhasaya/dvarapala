@@ -8,8 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"dvarapala/internal/platform/auth"
 	"dvarapala/internal/user"
+	"dvarapala/pkg/auth"
+	"dvarapala/pkg/config"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -31,7 +32,12 @@ func TestRouterAuthentication(t *testing.T) {
 	// Use a mock service to avoid nil pointer dereference in handlers
 	svc := &mockUserService{}
 	userHandler := user.NewUserHandler(svc)
-	router := NewRouter(userHandler, jwtManager)
+	cfg := &config.Config{
+		CORS: config.CORSConfig{
+			AllowedOrigins: []string{"*"},
+		},
+	}
+	router := NewRouter(userHandler, jwtManager, cfg)
 
 	tests := []struct {
 		name           string
@@ -70,7 +76,12 @@ func TestRouterAuthentication_ValidToken(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
 	svc := &mockUserService{}
 	userHandler := user.NewUserHandler(svc)
-	router := NewRouter(userHandler, jwtManager)
+	cfg := &config.Config{
+		CORS: config.CORSConfig{
+			AllowedOrigins: []string{"*"},
+		},
+	}
+	router := NewRouter(userHandler, jwtManager, cfg)
 
 	token, _ := jwtManager.Generate(1)
 

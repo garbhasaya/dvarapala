@@ -80,7 +80,7 @@ func main() {
 	userSvc := user.NewUserService(userRepo, jwtManager)
 	userHandler := user.NewUserHandler(userSvc)
 
-	router := platformhttp.NewRouter(userHandler, jwtManager)
+	router := platformhttp.NewRouter(userHandler, jwtManager, cfg)
 
 	srv := &http.Server{
 		Addr:         cfg.Server.Addr,

@@ -23,7 +23,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -50,7 +50,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -69,13 +69,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -114,7 +114,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -130,19 +130,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -178,7 +178,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -194,13 +194,13 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -236,7 +236,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -252,24 +252,24 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
             },
-            "post": {
+            "put": {
                 "security": [
                     {
                         "Bearer": []
@@ -310,7 +310,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -326,19 +326,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -373,19 +373,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -393,7 +393,7 @@
         }
     },
     "definitions": {
-        "dvarapala_internal_platform_render.Response": {
+        "dvarapala_pkg_render.Response": {
             "type": "object",
             "properties": {
                 "data": {},

@@ -29,7 +29,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -56,7 +56,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -75,13 +75,13 @@ const docTemplate = `{
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -120,7 +120,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -136,19 +136,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -184,7 +184,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -200,13 +200,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -242,7 +242,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -258,24 +258,24 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
             },
-            "post": {
+            "put": {
                 "security": [
                     {
                         "Bearer": []
@@ -316,7 +316,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                                    "$ref": "#/definitions/dvarapala_pkg_render.Response"
                                 },
                                 {
                                     "type": "object",
@@ -332,19 +332,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -379,19 +379,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                            "$ref": "#/definitions/dvarapala_pkg_render.Response"
                         }
                     }
                 }
@@ -399,7 +399,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dvarapala_internal_platform_render.Response": {
+        "dvarapala_pkg_render.Response": {
             "type": "object",
             "properties": {
                 "data": {},

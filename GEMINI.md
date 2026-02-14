@@ -130,7 +130,7 @@ To ensure codebase health and consistency, the following steps **must** be compl
 - `GET /users`: List all users.
 - `POST /users/auth`: Authenticate and get JWT.
 - `GET /users/{id}`: Get user by ID.
-- `POST /users/{id}`: Update user by ID.
+- `PUT /users/{id}`: Update user by ID.
 - `DELETE /users/{id}`: Delete user by ID.
 - `GET /swagger/*`: Swagger UI.
 
