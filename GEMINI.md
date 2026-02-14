@@ -56,6 +56,7 @@ Dvarapala is a microservice for user management, providing RESTful APIs for auth
 - **Standardized Responses**: All API responses follow a consistent JSON format defined in `internal/platform/render`.
 - **Context Propagation**: `context.Context` is passed through all layers for cancellation and timeouts.
 - **Graceful Shutdown**: The API server handles `SIGINT` and `SIGTERM` for graceful termination.
+- **Database Conventions**: All database table names **must** be in singular format (e.g., `user` instead of `users`). This is enforced in the Ent schema using `entsql.Annotation`.
 
 ## Development Workflow
 
@@ -97,7 +98,7 @@ To ensure codebase health and consistency, the following steps **must** be compl
 3.  **Generate Migration**: `make migrate-gen name=change_description`.
 4.  **Apply**: `make migrate-apply` (or restart the app for auto-migration).
 
-## Database Schema (User Table)
+### Database Schema (user table)
 | Field      | Type      | Description                          |
 |------------|-----------|--------------------------------------|
 | ID         | int       | Primary Key (Auto-increment)         |

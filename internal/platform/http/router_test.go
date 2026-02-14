@@ -2,6 +2,7 @@ package http
 
 import (
 	"bytes"
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,10 +14,23 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+type mockUserService struct {
+	user.Service
+}
+
+func (m *mockUserService) List(ctx context.Context) ([]*user.User, error) {
+	return []*user.User{}, nil
+}
+
+func (m *mockUserService) Authenticate(ctx context.Context, req user.AuthRequest) (*user.AuthResponse, error) {
+	return &user.AuthResponse{}, nil
+}
+
 func TestRouterAuthentication(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
-	// We don't need a real service for this test as we just want to see if middleware blocks
-	userHandler := user.NewHandler(nil)
+	// Use a mock service to avoid nil pointer dereference in handlers
+	svc := &mockUserService{}
+	userHandler := user.NewHandler(svc)
 	router := NewRouter(userHandler, jwtManager)
 
 	tests := []struct {
@@ -54,7 +68,8 @@ func TestRouterAuthentication(t *testing.T) {
 
 func TestRouterAuthentication_ValidToken(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
-	userHandler := user.NewHandler(nil)
+	svc := &mockUserService{}
+	userHandler := user.NewHandler(svc)
 	router := NewRouter(userHandler, jwtManager)
 
 	token, _ := jwtManager.Generate(1)
