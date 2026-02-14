@@ -1,0 +1,14 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - data:/app/data
+    environment:
+      - GO_ENV=development
+      - DB_PATH=/app/data/dvarapala.db
+    restart: always
+
+volumes:
+  data:
