@@ -16,6 +16,7 @@ import (
 	"dvarapala/internal/platform/auth"
 	platformhttp "dvarapala/internal/platform/http"
 	"dvarapala/internal/user"
+	"dvarapala/pkg/config"
 )
 
 // @title Dvarapala API
@@ -30,17 +31,18 @@ import (
 // @description Type "Bearer" followed by a space and JWT token.
 
 func main() {
-	logDir := os.Getenv("LOG_DIR")
-	if logDir == "" {
-		logDir = "log"
+	cfg, err := config.Load()
+	if err != nil {
+		fmt.Printf("failed to load config: %v\n", err)
+		os.Exit(1)
 	}
 
-	if err := os.MkdirAll(logDir, 0755); err != nil {
+	if err := os.MkdirAll(cfg.Log.Dir, 0755); err != nil {
 		fmt.Printf("failed to create log directory: %v\n", err)
 		os.Exit(1)
 	}
 
-	logFile, err := os.OpenFile(filepath.Join(logDir, "api.log"), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	logFile, err := os.OpenFile(filepath.Join(cfg.Log.Dir, "api.log"), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Printf("failed to open log file: %v\n", err)
 		os.Exit(1)
@@ -51,12 +53,7 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(mw, nil))
 	slog.SetDefault(logger)
 
-	dbPath := os.Getenv("DB_PATH")
-	if dbPath == "" {
-		dbPath = "dvarapala.db"
-	}
-
-	client, err := db.NewSQLiteClient(dbPath)
+	client, err := db.NewSQLiteClient(cfg.Database.Path)
 	if err != nil {
 		slog.Error("failed to open sqlite client", "error", err)
 		os.Exit(1)
@@ -64,11 +61,7 @@ func main() {
 	defer client.Close()
 
 	// Auth setup
-	jwtSecret := os.Getenv("JWT_SECRET")
-	if jwtSecret == "" {
-		jwtSecret = "very-secret-key" // Should be changed in production
-	}
-	jwtManager := auth.NewJWTManager(jwtSecret, 24*time.Hour)
+	jwtManager := auth.NewJWTManager(cfg.Auth.JWTSecret, cfg.Auth.JWTExpiry)
 
 	// Initialize components
 	userRepo := user.NewRepository(client)
@@ -78,15 +71,15 @@ func main() {
 	router := platformhttp.NewRouter(userHandler, jwtManager)
 
 	srv := &http.Server{
-		Addr:         ":8080",
+		Addr:         cfg.Server.Addr,
 		Handler:      router,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		IdleTimeout:  120 * time.Second,
+		ReadTimeout:  cfg.Server.ReadTimeout,
+		WriteTimeout: cfg.Server.WriteTimeout,
+		IdleTimeout:  cfg.Server.IdleTimeout,
 	}
 
 	go func() {
-		slog.Info("starting server", "addr", srv.Addr)
+		slog.Info("starting server", "addr", srv.Addr, "env", cfg.Environment)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			slog.Error("failed to listen and serve", "error", err)
 			os.Exit(1)
