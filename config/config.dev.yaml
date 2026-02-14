@@ -6,4 +6,4 @@ DB:
 LOG:
   DIR: "log_dev"
 AUTH:
-  JWT_SECRET: "dev-secret-key"
+  JWT_SECRET: "a-very-secure-and-shared-secret-key"

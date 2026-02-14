@@ -10,5 +10,5 @@ DB:
 LOG:
   DIR: "log"
 AUTH:
-  JWT_SECRET: "change-me-in-production"
+  JWT_SECRET: "a-very-secure-and-shared-secret-key"
   JWT_EXPIRY: 24h
