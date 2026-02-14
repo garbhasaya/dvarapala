@@ -12,8 +12,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// Service defines the business logic for users.
-type Service interface {
+// UserService defines the business logic for users.
+type UserService interface {
 	Create(ctx context.Context, req CreateUserRequest) (*User, error)
 	GetByID(ctx context.Context, id int) (*User, error)
 	List(ctx context.Context) ([]*User, error)
@@ -22,17 +22,17 @@ type Service interface {
 	Authenticate(ctx context.Context, req AuthRequest) (*AuthResponse, error)
 }
 
-type service struct {
-	repo *Repository
+type userService struct {
+	repo *UserRepository
 	jwt  *auth.JWTManager
 }
 
-// NewService creates a new user service.
-func NewService(repo *Repository, jwt *auth.JWTManager) Service {
-	return &service{repo: repo, jwt: jwt}
+// NewUserService creates a new user service.
+func NewUserService(repo *UserRepository, jwt *auth.JWTManager) UserService {
+	return &userService{repo: repo, jwt: jwt}
 }
 
-func (s *service) Create(ctx context.Context, req CreateUserRequest) (*User, error) {
+func (s *userService) Create(ctx context.Context, req CreateUserRequest) (*User, error) {
 	slog.Info("creating user", "email", req.Email)
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -58,7 +58,7 @@ func (s *service) Create(ctx context.Context, req CreateUserRequest) (*User, err
 	return s.toDomain(created), nil
 }
 
-func (s *service) GetByID(ctx context.Context, id int) (*User, error) {
+func (s *userService) GetByID(ctx context.Context, id int) (*User, error) {
 	slog.Info("getting user by id", "id", id)
 	u, err := s.repo.GetByID(ctx, id)
 	if err != nil {
@@ -68,7 +68,7 @@ func (s *service) GetByID(ctx context.Context, id int) (*User, error) {
 	return s.toDomain(u), nil
 }
 
-func (s *service) List(ctx context.Context) ([]*User, error) {
+func (s *userService) List(ctx context.Context) ([]*User, error) {
 	users, err := s.repo.List(ctx)
 	if err != nil {
 		slog.Error("failed to list users", "error", err)
@@ -82,7 +82,7 @@ func (s *service) List(ctx context.Context) ([]*User, error) {
 	return domainUsers, nil
 }
 
-func (s *service) Update(ctx context.Context, id int, req UpdateUserRequest) (*User, error) {
+func (s *userService) Update(ctx context.Context, id int, req UpdateUserRequest) (*User, error) {
 	slog.Info("updating user", "id", id)
 	existing, err := s.repo.GetByID(ctx, id)
 	if err != nil {
@@ -121,7 +121,7 @@ func (s *service) Update(ctx context.Context, id int, req UpdateUserRequest) (*U
 	return s.toDomain(updated), nil
 }
 
-func (s *service) Delete(ctx context.Context, id int) error {
+func (s *userService) Delete(ctx context.Context, id int) error {
 	slog.Info("deleting user", "id", id)
 	err := s.repo.Delete(ctx, id)
 	if err != nil {
@@ -132,7 +132,7 @@ func (s *service) Delete(ctx context.Context, id int) error {
 	return nil
 }
 
-func (s *service) Authenticate(ctx context.Context, req AuthRequest) (*AuthResponse, error) {
+func (s *userService) Authenticate(ctx context.Context, req AuthRequest) (*AuthResponse, error) {
 	slog.Info("authenticating user", "email", req.Email)
 	u, err := s.repo.GetByEmail(ctx, req.Email)
 	if err != nil {
@@ -159,7 +159,7 @@ func (s *service) Authenticate(ctx context.Context, req AuthRequest) (*AuthRespo
 	}, nil
 }
 
-func (s *service) toDomain(u *ent.User) *User {
+func (s *userService) toDomain(u *ent.User) *User {
 	return &User{
 		ID:        u.ID,
 		Firstname: u.Firstname,

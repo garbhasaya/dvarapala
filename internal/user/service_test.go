@@ -19,9 +19,9 @@ func TestService_Create(t *testing.T) {
 		assert.NoError(t, err)
 	}()
 
-	repo := NewRepository(client)
+	repo := NewUserRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)
-	svc := NewService(repo, jwtManager)
+	svc := NewUserService(repo, jwtManager)
 
 	ctx := context.Background()
 	req := CreateUserRequest{
@@ -47,9 +47,9 @@ func TestService_Authenticate(t *testing.T) {
 		assert.NoError(t, err)
 	}()
 
-	repo := NewRepository(client)
+	repo := NewUserRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)
-	svc := NewService(repo, jwtManager)
+	svc := NewUserService(repo, jwtManager)
 
 	ctx := context.Background()
 	email := "auth@example.com"
@@ -101,9 +101,9 @@ func TestService_Update(t *testing.T) {
 		assert.NoError(t, err)
 	}()
 
-	repo := NewRepository(client)
+	repo := NewUserRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)
-	svc := NewService(repo, jwtManager)
+	svc := NewUserService(repo, jwtManager)
 
 	ctx := context.Background()
 	u, err := svc.Create(ctx, CreateUserRequest{
@@ -135,9 +135,9 @@ func TestService_Delete(t *testing.T) {
 		assert.NoError(t, err)
 	}()
 
-	repo := NewRepository(client)
+	repo := NewUserRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)
-	svc := NewService(repo, jwtManager)
+	svc := NewUserService(repo, jwtManager)
 
 	ctx := context.Background()
 	u, err := svc.Create(ctx, CreateUserRequest{

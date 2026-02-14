@@ -1,4 +1,6 @@
 ENVIRONMENT: dev
+SERVER:
+  HOST: "localhost:8080"
 DATABASE:
   PATH: "data/dvarapala_dev.db"
 LOG:

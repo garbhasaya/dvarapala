@@ -210,11 +210,31 @@ The database initialization is fully aligned with the Ent migration setup. On ev
 - Created at
 - Updated at
 
+## Configuration
+
+The application can be configured using environment variables or YAML files (`config.yaml`, `config.dev.yaml`).
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ENVIRONMENT` | Deployment environment (`dev`, `production`) | `production` |
+| `SERVER_ADDR` | Internal network address the server binds to | `:8080` |
+| `SERVER_HOST` | Public-facing host/port for Swagger documentation | `localhost:8080` |
+| `DATABASE_PATH` | Path to the SQLite database file | `data/dvarapala.db` |
+| `LOG_DIR` | Directory where log files are stored | `log` |
+| `AUTH_JWT_SECRET` | Secret key used for signing JWT tokens | `very-secret-key` |
+| `AUTH_JWT_EXPIRY` | Expiration time for JWT tokens | `24h` |
+
+### Running on a different Port/Host
+- To change the port the server listens on: set `SERVER_ADDR=:9090`.
+- To change the address used in Swagger documentation: set `SERVER_HOST=api.example.com`.
+
 ## Service URLs
 
-- **API Gateway**: [http://localhost:8080](http://localhost:8080)
-- **Health Check**: [http://localhost:8080/health](http://localhost:8080/health)
-- **Swagger UI**: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
+By default, the services are available at:
+
+- **API Gateway**: `http://<SERVER_HOST>`
+- **Health Check**: `http://<SERVER_HOST>/health`
+- **Swagger UI**: `http://<SERVER_HOST>/swagger/index.html`
 
 ## API Endpoints
 

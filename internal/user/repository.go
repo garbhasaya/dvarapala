@@ -9,18 +9,18 @@ import (
 	"dvarapala/ent/user"
 )
 
-// Repository handles database operations for users.
-type Repository struct {
+// UserRepository handles database operations for users.
+type UserRepository struct {
 	client *ent.Client
 }
 
-// NewRepository creates a new user repository.
-func NewRepository(client *ent.Client) *Repository {
-	return &Repository{client: client}
+// NewUserRepository creates a new user repository.
+func NewUserRepository(client *ent.Client) *UserRepository {
+	return &UserRepository{client: client}
 }
 
 // Create creates a new user in the database.
-func (r *Repository) Create(ctx context.Context, u *ent.User) (*ent.User, error) {
+func (r *UserRepository) Create(ctx context.Context, u *ent.User) (*ent.User, error) {
 	created, err := r.client.User.
 		Create().
 		SetFirstname(u.Firstname).
@@ -37,7 +37,7 @@ func (r *Repository) Create(ctx context.Context, u *ent.User) (*ent.User, error)
 }
 
 // GetByID retrieves a user by their ID.
-func (r *Repository) GetByID(ctx context.Context, id int) (*ent.User, error) {
+func (r *UserRepository) GetByID(ctx context.Context, id int) (*ent.User, error) {
 	u, err := r.client.User.Get(ctx, id)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -51,7 +51,7 @@ func (r *Repository) GetByID(ctx context.Context, id int) (*ent.User, error) {
 }
 
 // GetByEmail retrieves a user by their email.
-func (r *Repository) GetByEmail(ctx context.Context, email string) (*ent.User, error) {
+func (r *UserRepository) GetByEmail(ctx context.Context, email string) (*ent.User, error) {
 	u, err := r.client.User.Query().
 		Where(user.EmailEQ(email)).
 		Only(ctx)
@@ -67,7 +67,7 @@ func (r *Repository) GetByEmail(ctx context.Context, email string) (*ent.User, e
 }
 
 // List retrieves all users.
-func (r *Repository) List(ctx context.Context) ([]*ent.User, error) {
+func (r *UserRepository) List(ctx context.Context) ([]*ent.User, error) {
 	users, err := r.client.User.Query().All(ctx)
 	if err != nil {
 		slog.Error("database error: failed to list users", "error", err)
@@ -77,7 +77,7 @@ func (r *Repository) List(ctx context.Context) ([]*ent.User, error) {
 }
 
 // Update updates an existing user.
-func (r *Repository) Update(ctx context.Context, id int, u *ent.User) (*ent.User, error) {
+func (r *UserRepository) Update(ctx context.Context, id int, u *ent.User) (*ent.User, error) {
 	updated, err := r.client.User.UpdateOneID(id).
 		SetFirstname(u.Firstname).
 		SetLastname(u.Lastname).
@@ -93,7 +93,7 @@ func (r *Repository) Update(ctx context.Context, id int, u *ent.User) (*ent.User
 }
 
 // Delete deletes a user by their ID.
-func (r *Repository) Delete(ctx context.Context, id int) error {
+func (r *UserRepository) Delete(ctx context.Context, id int) error {
 	err := r.client.User.DeleteOneID(id).Exec(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {

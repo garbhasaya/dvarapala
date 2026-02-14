@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"time"
 
+	"dvarapala/docs"
 	"dvarapala/internal/db"
 	"dvarapala/internal/platform/auth"
 	platformhttp "dvarapala/internal/platform/http"
@@ -57,6 +58,9 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(mw, nil))
 	slog.SetDefault(logger)
 
+	// Override Swagger host
+	docs.SwaggerInfo.Host = cfg.Server.Host
+
 	client, err := db.NewSQLiteClient(cfg.Database.Path)
 	if err != nil {
 		slog.Error("failed to open sqlite client", "error", err)
@@ -72,9 +76,9 @@ func main() {
 	jwtManager := auth.NewJWTManager(cfg.Auth.JWTSecret, cfg.Auth.JWTExpiry)
 
 	// Initialize components
-	userRepo := user.NewRepository(client)
-	userSvc := user.NewService(userRepo, jwtManager)
-	userHandler := user.NewHandler(userSvc)
+	userRepo := user.NewUserRepository(client)
+	userSvc := user.NewUserService(userRepo, jwtManager)
+	userHandler := user.NewUserHandler(userSvc)
 
 	router := platformhttp.NewRouter(userHandler, jwtManager)
 

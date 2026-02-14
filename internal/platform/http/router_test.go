@@ -15,7 +15,7 @@ import (
 )
 
 type mockUserService struct {
-	user.Service
+	user.UserService
 }
 
 func (m *mockUserService) List(ctx context.Context) ([]*user.User, error) {
@@ -30,7 +30,7 @@ func TestRouterAuthentication(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
 	// Use a mock service to avoid nil pointer dereference in handlers
 	svc := &mockUserService{}
-	userHandler := user.NewHandler(svc)
+	userHandler := user.NewUserHandler(svc)
 	router := NewRouter(userHandler, jwtManager)
 
 	tests := []struct {
@@ -69,7 +69,7 @@ func TestRouterAuthentication(t *testing.T) {
 func TestRouterAuthentication_ValidToken(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
 	svc := &mockUserService{}
-	userHandler := user.NewHandler(svc)
+	userHandler := user.NewUserHandler(svc)
 	router := NewRouter(userHandler, jwtManager)
 
 	token, _ := jwtManager.Generate(1)

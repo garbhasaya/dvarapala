@@ -65,7 +65,7 @@ func (m *mockService) Authenticate(ctx context.Context, req AuthRequest) (*AuthR
 
 func TestHandler_Create(t *testing.T) {
 	svc := new(mockService)
-	handler := NewHandler(svc)
+	handler := NewUserHandler(svc)
 
 	reqBody := CreateUserRequest{
 		Firstname: "Hiren",
@@ -88,7 +88,7 @@ func TestHandler_Create(t *testing.T) {
 	req, _ := http.NewRequest("POST", "/users", bytes.NewBuffer(body))
 	rr := httptest.NewRecorder()
 
-	handler.Create(rr, req)
+	handler.CreateUser(rr, req)
 
 	assert.Equal(t, http.StatusCreated, rr.Code)
 
@@ -104,7 +104,7 @@ func TestHandler_Create(t *testing.T) {
 
 func TestHandler_Authenticate(t *testing.T) {
 	svc := new(mockService)
-	handler := NewHandler(svc)
+	handler := NewUserHandler(svc)
 
 	reqBody := AuthRequest{
 		Email:    "hiren@example.com",
@@ -125,7 +125,7 @@ func TestHandler_Authenticate(t *testing.T) {
 	req, _ := http.NewRequest("POST", "/users/auth", bytes.NewBuffer(body))
 	rr := httptest.NewRecorder()
 
-	handler.Authenticate(rr, req)
+	handler.AuthenticateUser(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
 

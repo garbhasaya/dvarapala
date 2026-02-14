@@ -13,45 +13,45 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-// Handler handles HTTP requests for users.
-type Handler struct {
-	svc      Service
+// UserHandler handles HTTP requests for users.
+type UserHandler struct {
+	svc      UserService
 	validate *validator.Validate
 }
 
-// NewHandler creates a new user handler.
-func NewHandler(svc Service) *Handler {
-	return &Handler{
+// NewUserHandler creates a new user handler.
+func NewUserHandler(svc UserService) *UserHandler {
+	return &UserHandler{
 		svc:      svc,
 		validate: validator.New(),
 	}
 }
 
 // Routes returns the chi router for user endpoints.
-func (h *Handler) Routes(jwtManager *auth.JWTManager) chi.Router {
+func (h *UserHandler) Routes(jwtManager *auth.JWTManager) chi.Router {
 	r := chi.NewRouter()
 
 	// Public routes
-	r.Post("/auth", h.Authenticate)
+	r.Post("/auth", h.AuthenticateUser)
 
 	// Protected routes
 	r.Group(func(r chi.Router) {
 		r.Use(auth.Middleware(jwtManager))
 
-		r.Post("/", h.Create)
-		r.Get("/", h.List)
+		r.Post("/", h.CreateUser)
+		r.Get("/", h.ListUsers)
 
 		r.Route("/{id}", func(r chi.Router) {
-			r.Get("/", h.GetByID)
-			r.Post("/", h.Update) // README said POST for update
-			r.Delete("/", h.Delete)
+			r.Get("/", h.GetUserByID)
+			r.Post("/", h.UpdateUser) // README said POST for update
+			r.Delete("/", h.DeleteUser)
 		})
 	})
 
 	return r
 }
 
-// Create godoc
+// CreateUser godoc
 // @Summary Create a new user
 // @Description Create a new user with the provided details
 // @Tags users
@@ -64,7 +64,7 @@ func (h *Handler) Routes(jwtManager *auth.JWTManager) chi.Router {
 // @Failure 500 {object} render.Response
 // @Security Bearer
 // @Router /users [post]
-func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
+func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var req CreateUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		slog.Warn("failed to decode create user request", "error", err)
@@ -88,7 +88,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, http.StatusCreated, u)
 }
 
-// List godoc
+// ListUsers godoc
 // @Summary List all users
 // @Description Get a list of all registered users
 // @Tags users
@@ -98,7 +98,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} render.Response
 // @Security Bearer
 // @Router /users [get]
-func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
+func (h *UserHandler) ListUsers(w http.ResponseWriter, r *http.Request) {
 	users, err := h.svc.List(r.Context())
 	if err != nil {
 		render.Error(w, http.StatusInternalServerError, err.Error())
@@ -108,7 +108,7 @@ func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, http.StatusOK, users)
 }
 
-// GetByID godoc
+// GetUserByID godoc
 // @Summary Get user by ID
 // @Description Get a single user by their unique ID
 // @Tags users
@@ -120,7 +120,7 @@ func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 // @Failure 404 {object} render.Response
 // @Security Bearer
 // @Router /users/{id} [get]
-func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
+func (h *UserHandler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -139,7 +139,7 @@ func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, http.StatusOK, u)
 }
 
-// Update godoc
+// UpdateUser godoc
 // @Summary Update user
 // @Description Update an existing user's details
 // @Tags users
@@ -153,7 +153,7 @@ func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} render.Response
 // @Security Bearer
 // @Router /users/{id} [post]
-func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
+func (h *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -184,7 +184,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, http.StatusOK, u)
 }
 
-// Delete godoc
+// DeleteUser godoc
 // @Summary Delete user
 // @Description Remove a user from the system by ID
 // @Tags users
@@ -196,7 +196,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} render.Response
 // @Security Bearer
 // @Router /users/{id} [delete]
-func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
+func (h *UserHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -213,7 +213,7 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, http.StatusNoContent, nil)
 }
 
-// Authenticate godoc
+// AuthenticateUser godoc
 // @Summary Authenticate user
 // @Description Login with email and password to receive a JWT token
 // @Tags users
@@ -224,7 +224,7 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Failure 400 {object} render.Response
 // @Failure 401 {object} render.Response
 // @Router /users/auth [post]
-func (h *Handler) Authenticate(w http.ResponseWriter, r *http.Request) {
+func (h *UserHandler) AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 	var req AuthRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		slog.Warn("failed to decode auth request", "error", err)

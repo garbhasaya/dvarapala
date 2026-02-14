@@ -14,7 +14,7 @@ import (
 )
 
 // NewRouter creates a new chi router with default middleware and application routes.
-func NewRouter(userHandler *user.Handler, jwtManager *auth.JWTManager) *chi.Mux {
+func NewRouter(userHandler *user.UserHandler, jwtManager *auth.JWTManager) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
