@@ -118,7 +118,53 @@ The project uses Docker and a Makefile for development.
 - `make lint`: Run `golangci-lint` using a dedicated Docker image.
 - `make swag`: Generate Swagger documentation.
 - `make shell`: Open an interactive shell inside the API container.
+- `make migrate-gen name=migration_name`: Generate a new versioned migration file.
 - `make clean`: Deep clean of containers, images, and volumes.
+
+## Database Migrations
+
+This project uses **Ent** with **Atlas** for versioned migrations. Follow these steps when you need to change the database schema:
+
+### 1. Create or Modify the Schema
+
+#### To create a new table:
+Initialize a new schema file:
+```bash
+docker run --rm -v $(pwd):/app -w /app golang:1.26-alpine go run -mod=mod entgo.io/ent/cmd/ent new TableName
+```
+Then define the fields in `ent/schema/tablename.go`.
+
+#### To modify an existing table:
+Update the schema definitions in the `ent/schema/` directory (e.g., `ent/schema/user.go`).
+
+### 2. Generate Ent Code
+After modifying the schema, regenerate the Ent runtime code:
+```bash
+docker run --rm -v $(pwd):/app -w /app golang:1.26-alpine go generate ./ent/...
+```
+
+### 3. Generate Migration Files
+Generate a new SQL migration file by comparing your schema changes against an in-memory database:
+```bash
+make migrate-gen name=add_new_field_to_user
+```
+This will create new `.sql` files in `ent/migrate/migrations/`.
+
+### 4. Apply Migrations
+In the current development setup, the application automatically applies migrations on startup using `client.Schema.Create` in `internal/db/sqlite.go`. Simply restart the service:
+```bash
+make restart
+```
+
+## Database Persistence
+
+The SQLite database is stored at `/app/data/dvarapala.db` inside the container. This path is persisted using a Docker named volume called `data`.
+
+- **Container Path**: `/app/data/dvarapala.db`
+- **Volume Name**: `data`
+- **Environment Variable**: `DB_PATH`
+
+The database initialization is fully aligned with the Ent migration setup. On every startup, the application verifies the schema against the generated Ent code and applies any necessary changes to the SQLite file, ensuring the physical database always matches your versioned migration files.
 
 ## Database schema
 

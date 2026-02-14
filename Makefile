@@ -37,6 +37,14 @@ swag:
 shell:
 	docker-compose exec api sh
 
+# Database migrations
+migrate-gen:
+	docker run --rm -v $(shell pwd):/app -w /app \
+		-e CGO_ENABLED=1 \
+		-e CGO_CFLAGS="-D_LARGEFILE64_SOURCE" \
+		golang:1.26-alpine \
+		sh -c "apk add --no-cache build-base && go run -mod=mod ent/migrate/main.go $(name)"
+
 # Clean up containers, images, and volumes
 clean:
 	docker-compose down --rmi all --volumes --remove-orphans

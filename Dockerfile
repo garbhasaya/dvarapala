@@ -18,7 +18,7 @@ COPY . .
 
 # Build the application
 # CGO_ENABLED=1 is required for the standard SQLite driver
-RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o dvarapala ./cmd/api/main.go
+RUN CGO_ENABLED=1 CGO_CFLAGS="-D_LARGEFILE64_SOURCE" GOOS=linux go build -a -installsuffix cgo -o dvarapala ./cmd/api/main.go
 
 # Final stage
 FROM alpine:latest
