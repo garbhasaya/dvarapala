@@ -114,6 +114,8 @@ The project uses Docker and a Makefile for development.
 - `make restart`: Restart the services.
 - `make logs`: Follow the container logs.
 - `make ps`: List the running containers.
+- `make deps-upgrade`: Update all Go dependencies to their latest versions and run tests.
+- `make go-upgrade version=1.x`: Upgrade the Go version across the project (go.mod, Dockerfile, Makefile) and rebuild.
 - `make test`: Run all Go tests inside the container.
 - `make lint`: Run `golangci-lint` using a dedicated Docker image.
 - `make swag`: Generate Swagger documentation.
@@ -121,6 +123,20 @@ The project uses Docker and a Makefile for development.
 - `make migrate-gen name=migration_name`: Generate a new versioned migration file.
 - `make migrate-apply`: Apply all pending migrations to the database.
 - `make clean`: Deep clean of containers, images, and volumes.
+
+## Upgrading Go Version
+
+To upgrade the Go version used in this project, run the following command with the desired version:
+
+```bash
+make go-upgrade version=1.27
+```
+
+This command automatically performs the following:
+1. **Updates `go.mod`**: Changes the `go` version directive.
+2. **Updates `Dockerfile`**: Changes the `FROM golang:<version>-alpine` base image.
+3. **Updates `Makefile`**: Updates all `golang:<version>-alpine` image references used for tests and migrations.
+4. **Rebuilds Images**: Runs `make build` to apply the changes.
 
 ## Database Migrations
 
@@ -212,10 +228,10 @@ The API implements rate limiting using `httprate` middleware. By default, it is 
 
 Structured logging is implemented project-wide using the standard library `log/slog`. Important events such as database initialization, user creation, authentication attempts, and errors are logged with appropriate levels (INFO, WARN, ERROR).
 
-Logs are written to both **stdout** and to a file named `api.log` located in the `logs/` directory.
+Logs are written to both **stdout** and to a file named `api.log` located in the `log/` directory.
 
 ## Persistence
 
 The project uses Docker volumes to persist data and logs outside the container:
 - **Database**: Stored in `./data/dvarapala.db`.
-- **Logs**: Stored in `./logs/api.log`.
+- **Logs**: Stored in `./log/api.log`.

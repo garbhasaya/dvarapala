@@ -46,6 +46,14 @@ deps-upgrade:
 		sh -c "go get -u ./... && go mod tidy"
 	$(MAKE) test
 
+# Upgrade Go version across the project
+go-upgrade:
+	@if [ -z "$(version)" ]; then echo "Usage: make go-upgrade version=1.x"; exit 1; fi
+	sed -i 's/^go [0-9.]*/go $(version)/' go.mod
+	sed -i 's/^FROM golang:[0-9.]*-alpine/FROM golang:$(version)-alpine/' Dockerfile
+	sed -i 's/golang:[0-9.]*-alpine/golang:$(version)-alpine/g' Makefile
+	$(MAKE) build
+
 # Database migrations
 migrate-gen:
 	docker run --rm -v $(shell pwd):/app -w /app \

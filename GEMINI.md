@@ -42,7 +42,7 @@ Dvarapala is a microservice for user management, providing RESTful APIs for auth
 │       └── user.go         # User database schema definition
 ├── pkg/                    # Shared packages (logger, config)
 ├── data/                   # SQLite database file (persisted via volume)
-├── logs/                   # Application logs (persisted via volume)
+├── log/                    # Application logs (persisted via volume)
 ├── docs/                   # Swagger documentation
 ├── Dockerfile              # Docker build configuration
 ├── docker-compose.yml      # Service orchestration
@@ -110,11 +110,11 @@ To ensure codebase health and consistency, the following steps **must** be compl
 - `GET /swagger/*`: Swagger UI.
 
 ## Logging & Monitoring
-- Logs are written to **stdout** and `./logs/api.log`.
+- Logs are written to **stdout** and `./log/api.log`.
 - Log format is JSON (structured).
 - Levels: `INFO` for normal operations, `WARN` for client errors/auth failures, `ERROR` for system failures.
 
 ## Persistence & Volumes
 - **Database**: `./data/dvarapala.db` mapped to `/app/data/dvarapala.db`.
-- **Logs**: `./logs/` mapped to `/app/logs/`.
+- **Logs**: `./log/` mapped to `/app/log/`.
 - **Environment**: `DB_PATH` and `LOG_DIR` control these paths.

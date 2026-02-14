@@ -5,11 +5,11 @@ services:
       - "8080:8080"
     volumes:
       - ./data:/app/data
-      - ./logs:/app/logs
+      - ./log:/app/log
     environment:
       - GO_ENV=development
       - DB_PATH=/app/data/dvarapala.db
-      - LOG_DIR=/app/logs
+      - LOG_DIR=/app/log
     restart: always
 
   atlas:

@@ -32,7 +32,7 @@ import (
 func main() {
 	logDir := os.Getenv("LOG_DIR")
 	if logDir == "" {
-		logDir = "logs"
+		logDir = "log"
 	}
 
 	if err := os.MkdirAll(logDir, 0755); err != nil {
