@@ -6,12 +6,18 @@ import (
 	"net/http"
 	"strings"
 
-	"dvarapala/internal/platform/render"
+	"dvarapala/pkg/render"
 )
 
 type contextKey string
 
 const UserClaimsKey contextKey = "user_claims"
+
+// GetClaimsFromContext retrieves the user claims from the context.
+func GetClaimsFromContext(ctx context.Context) (*UserClaims, bool) {
+	claims, ok := ctx.Value(UserClaimsKey).(*UserClaims)
+	return claims, ok
+}
 
 // Middleware returns a middleware that authenticates requests using JWT.
 func Middleware(manager *JWTManager) func(http.Handler) http.Handler {

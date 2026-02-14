@@ -219,7 +219,7 @@ The application can be configured using environment variables or YAML files (`co
 | `ENVIRONMENT` | Deployment environment (`dev`, `production`) | `production` |
 | `SERVER_ADDR` | Internal network address the server binds to | `:8080` |
 | `SERVER_HOST` | Public-facing host/port for Swagger documentation | `localhost:8080` |
-| `DATABASE_PATH` | Path to the SQLite database file | `data/dvarapala.db` |
+| `DB_PATH` | Path to the SQLite database file | `data/dvarapala.db` |
 | `LOG_DIR` | Directory where log files are stored | `log` |
 | `AUTH_JWT_SECRET` | Secret key used for signing JWT tokens | `very-secret-key` |
 | `AUTH_JWT_EXPIRY` | Expiration time for JWT tokens | `24h` |

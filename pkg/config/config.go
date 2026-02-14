@@ -12,7 +12,7 @@ import (
 type Config struct {
 	Environment string `mapstructure:"ENVIRONMENT"`
 	Server      ServerConfig
-	Database    DatabaseConfig
+	DB          DatabaseConfig `mapstructure:"DB"`
 	Log         LogConfig
 	Auth        AuthConfig
 }
@@ -53,13 +53,14 @@ func Load() (*Config, error) {
 	v.SetDefault("SERVER.READ_TIMEOUT", 5*time.Second)
 	v.SetDefault("SERVER.WRITE_TIMEOUT", 10*time.Second)
 	v.SetDefault("SERVER.IDLE_TIMEOUT", 120*time.Second)
-	v.SetDefault("DATABASE.PATH", "dvarapala.db")
+	v.SetDefault("DB.PATH", "dvarapala.db")
 	v.SetDefault("LOG.DIR", "log")
 	v.SetDefault("AUTH.JWT_SECRET", "very-secret-key")
 	v.SetDefault("AUTH.JWT_EXPIRY", 24*time.Hour)
 
 	// Environment variables
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	v.BindEnv("DB.PATH", "DB_PATH")
 	v.AutomaticEnv()
 
 	// Config file

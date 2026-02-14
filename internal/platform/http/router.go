@@ -4,8 +4,8 @@ import (
 	"time"
 
 	_ "dvarapala/docs" // Import generated docs
-	"dvarapala/internal/platform/auth"
 	"dvarapala/internal/user"
+	"dvarapala/pkg/auth"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

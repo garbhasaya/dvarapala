@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"dvarapala/internal/platform/render"
+	"dvarapala/pkg/render"
 
 	"github.com/stretchr/testify/assert"
 )

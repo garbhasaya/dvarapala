@@ -5,7 +5,7 @@ SERVER:
   READ_TIMEOUT: 5s
   WRITE_TIMEOUT: 10s
   IDLE_TIMEOUT: 120s
-DATABASE:
+DB:
   PATH: "data/dvarapala.db"
 LOG:
   DIR: "log"

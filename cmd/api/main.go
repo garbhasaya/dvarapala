@@ -14,9 +14,9 @@ import (
 
 	"dvarapala/docs"
 	"dvarapala/internal/db"
-	"dvarapala/internal/platform/auth"
 	platformhttp "dvarapala/internal/platform/http"
 	"dvarapala/internal/user"
+	"dvarapala/pkg/auth"
 	"dvarapala/pkg/config"
 )
 
@@ -61,7 +61,7 @@ func main() {
 	// Override Swagger host
 	docs.SwaggerInfo.Host = cfg.Server.Host
 
-	client, err := db.NewSQLiteClient(cfg.Database.Path)
+	client, err := db.NewSQLiteClient(cfg.DB.Path)
 	if err != nil {
 		slog.Error("failed to open sqlite client", "error", err)
 		os.Exit(1)

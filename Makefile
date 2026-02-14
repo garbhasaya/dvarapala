@@ -43,6 +43,14 @@ swag:
 shell:
 	docker-compose exec api sh
 
+# Open a shell with Go tools and build dependencies
+dev-shell:
+	docker run --rm -it -v $(shell pwd):/app -w /app \
+		-e CGO_ENABLED=1 \
+		-e CGO_CFLAGS="-D_LARGEFILE64_SOURCE" \
+		golang:1.26-alpine \
+		sh -c "apk add --no-cache build-base && sh"
+
 # Clean up go.mod and go.sum
 tidy:
 	docker run --rm -v $(shell pwd):/app -w /app golang:1.26-alpine go mod tidy

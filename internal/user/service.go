@@ -7,7 +7,7 @@ import (
 	"log/slog"
 
 	"dvarapala/ent"
-	"dvarapala/internal/platform/auth"
+	"dvarapala/pkg/auth"
 
 	"golang.org/x/crypto/bcrypt"
 )

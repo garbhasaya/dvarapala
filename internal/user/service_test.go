@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"dvarapala/ent/enttest"
-	"dvarapala/internal/platform/auth"
+	"dvarapala/pkg/auth"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"

@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"dvarapala/internal/platform/render"
+	"dvarapala/pkg/render"
 )
 
 // HealthHandler returns a simple 200 OK status.
