@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"dvarapala/internal/platform/render"
+
 	"github.com/stretchr/testify/assert"
 )
 

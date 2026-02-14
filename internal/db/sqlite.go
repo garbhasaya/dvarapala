@@ -19,8 +19,8 @@ func NewSQLiteClient(path string) (*ent.Client, error) {
 		slog.Error("failed to open sqlite connection", "path", path, "error", err)
 		return nil, fmt.Errorf("failed opening connection to sqlite: %v", err)
 	}
-	
-	// Run the auto migration tool if you want to keep it simple, 
+
+	// Run the auto migration tool if you want to keep it simple,
 	// OR use the versioned migrations.
 	// For versioned migrations, we typically use the migrate package.
 	slog.Info("running auto migration")
@@ -29,7 +29,7 @@ func NewSQLiteClient(path string) (*ent.Client, error) {
 		client.Close()
 		return nil, fmt.Errorf("failed creating schema resources: %v", err)
 	}
-	
+
 	slog.Info("database initialization completed successfully")
 	return client, nil
 }

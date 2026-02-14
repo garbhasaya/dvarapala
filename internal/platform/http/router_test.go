@@ -9,13 +9,14 @@ import (
 
 	"dvarapala/internal/platform/auth"
 	"dvarapala/internal/user"
+
 	"github.com/stretchr/testify/assert"
 )
 
 func TestRouterAuthentication(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
 	// We don't need a real service for this test as we just want to see if middleware blocks
-	userHandler := user.NewHandler(nil) 
+	userHandler := user.NewHandler(nil)
 	router := NewRouter(userHandler, jwtManager)
 
 	tests := []struct {
@@ -36,14 +37,14 @@ func TestRouterAuthentication(t *testing.T) {
 			if tt.method == "POST" {
 				body = bytes.NewBuffer([]byte("{}"))
 			}
-			
+
 			var req *http.Request
 			if body != nil {
 				req, _ = http.NewRequest(tt.method, tt.url, body)
 			} else {
 				req, _ = http.NewRequest(tt.method, tt.url, nil)
 			}
-			
+
 			rr := httptest.NewRecorder()
 			router.ServeHTTP(rr, req)
 			assert.Equal(t, tt.wantStatusCode, rr.Code)
@@ -53,7 +54,7 @@ func TestRouterAuthentication(t *testing.T) {
 
 func TestRouterAuthentication_ValidToken(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
-	userHandler := user.NewHandler(nil) 
+	userHandler := user.NewHandler(nil)
 	router := NewRouter(userHandler, jwtManager)
 
 	token, _ := jwtManager.Generate(1)

@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"dvarapala/internal/platform/render"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -93,8 +94,8 @@ func TestHandler_Create(t *testing.T) {
 
 	var resp render.Response
 	json.Unmarshal(rr.Body.Bytes(), &resp)
-	
-	// Convert map to struct for easier comparison if needed, 
+
+	// Convert map to struct for easier comparison if needed,
 	// or just check fields from the map
 	dataMap := resp.Data.(map[string]interface{})
 	assert.Equal(t, expectedUser.Email, dataMap["email"])
@@ -129,7 +130,7 @@ func TestHandler_Authenticate(t *testing.T) {
 
 	var resp render.Response
 	json.Unmarshal(rr.Body.Bytes(), &resp)
-	
+
 	dataMap := resp.Data.(map[string]interface{})
 	assert.Equal(t, expectedResp.Token, dataMap["token"])
 }

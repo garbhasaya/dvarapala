@@ -8,6 +8,7 @@ import (
 
 	"dvarapala/internal/platform/auth"
 	"dvarapala/internal/platform/render"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
 )
@@ -36,10 +37,10 @@ func (h *Handler) Routes(jwtManager *auth.JWTManager) chi.Router {
 	// Protected routes
 	r.Group(func(r chi.Router) {
 		r.Use(auth.Middleware(jwtManager))
-		
+
 		r.Post("/", h.Create)
 		r.Get("/", h.List)
-		
+
 		r.Route("/{id}", func(r chi.Router) {
 			r.Get("/", h.GetByID)
 			r.Post("/", h.Update) // README said POST for update
