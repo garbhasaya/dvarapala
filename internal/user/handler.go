@@ -51,7 +51,9 @@ func (h *Handler) Routes() chi.Router {
 // @Param user body CreateUserRequest true "User details"
 // @Success 201 {object} render.Response{data=User}
 // @Failure 400 {object} render.Response
+// @Failure 401 {object} render.Response
 // @Failure 500 {object} render.Response
+// @Security Bearer
 // @Router /users [post]
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	var req CreateUserRequest
@@ -83,7 +85,9 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 // @Tags users
 // @Produce json
 // @Success 200 {object} render.Response{data=[]User}
+// @Failure 401 {object} render.Response
 // @Failure 500 {object} render.Response
+// @Security Bearer
 // @Router /users [get]
 func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 	users, err := h.svc.List(r.Context())
@@ -103,7 +107,9 @@ func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 // @Param id path int true "User ID"
 // @Success 200 {object} render.Response{data=User}
 // @Failure 400 {object} render.Response
+// @Failure 401 {object} render.Response
 // @Failure 404 {object} render.Response
+// @Security Bearer
 // @Router /users/{id} [get]
 func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
@@ -134,7 +140,9 @@ func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 // @Param user body UpdateUserRequest true "Updated user details"
 // @Success 200 {object} render.Response{data=User}
 // @Failure 400 {object} render.Response
+// @Failure 401 {object} render.Response
 // @Failure 500 {object} render.Response
+// @Security Bearer
 // @Router /users/{id} [post]
 func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
@@ -175,7 +183,9 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 // @Param id path int true "User ID"
 // @Success 204 "No Content"
 // @Failure 400 {object} render.Response
+// @Failure 401 {object} render.Response
 // @Failure 500 {object} render.Response
+// @Security Bearer
 // @Router /users/{id} [delete]
 func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
@@ -204,6 +214,7 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} render.Response{data=AuthResponse}
 // @Failure 400 {object} render.Response
 // @Failure 401 {object} render.Response
+// @Security Bearer
 // @Router /users/auth [post]
 func (h *Handler) Authenticate(w http.ResponseWriter, r *http.Request) {
 	var req AuthRequest

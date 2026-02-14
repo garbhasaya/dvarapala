@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/health": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Get the health status of the service",
                 "produces": [
                     "application/json"
@@ -31,12 +36,23 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                        }
                     }
                 }
             }
         },
         "/users": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Get a list of all registered users",
                 "produces": [
                     "application/json"
@@ -67,6 +83,12 @@ const docTemplate = `{
                             ]
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -76,6 +98,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Create a new user with the provided details",
                 "consumes": [
                     "application/json"
@@ -123,6 +150,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -134,6 +167,11 @@ const docTemplate = `{
         },
         "/users/auth": {
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Login with email and password to receive a JWT token",
                 "consumes": [
                     "application/json"
@@ -192,6 +230,11 @@ const docTemplate = `{
         },
         "/users/{id}": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Get a single user by their unique ID",
                 "produces": [
                     "application/json"
@@ -234,6 +277,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "schema": {
@@ -243,6 +292,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Update an existing user's details",
                 "consumes": [
                     "application/json"
@@ -297,6 +351,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -306,6 +366,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Remove a user from the system by ID",
                 "produces": [
                     "application/json"
@@ -329,6 +394,12 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
                         }
@@ -455,6 +526,14 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "description": "Type \"Bearer\" followed by a space and JWT token.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

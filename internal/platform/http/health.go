@@ -1,6 +1,7 @@
 package http
 
 import (
+	"log/slog"
 	"net/http"
 
 	"dvarapala/internal/platform/render"
@@ -12,7 +13,10 @@ import (
 // @Tags health
 // @Produce json
 // @Success 200 {object} render.Response
+// @Failure 401 {object} render.Response
+// @Security Bearer
 // @Router /health [get]
 func HealthHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("health check requested", "remote_addr", r.RemoteAddr)
 	render.JSON(w, http.StatusOK, map[string]string{"status": "UP"})
 }

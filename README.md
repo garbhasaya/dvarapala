@@ -193,6 +193,8 @@ The database initialization is fully aligned with the Ent migration setup. On ev
 
 ## API Endpoints
 
+> **Note**: Every API endpoint requires authentication via a valid JWT token passed in the `Authorization` header as a Bearer token.
+
 - `GET /health`: Check service health.
 - `POST /users`: Create a new user.
 - `GET /users`: List all users.

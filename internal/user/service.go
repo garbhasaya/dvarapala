@@ -58,8 +58,10 @@ func (s *service) Create(ctx context.Context, req CreateUserRequest) (*User, err
 }
 
 func (s *service) GetByID(ctx context.Context, id int) (*User, error) {
+	slog.Info("getting user by id", "id", id)
 	u, err := s.repo.GetByID(ctx, id)
 	if err != nil {
+		// slog.Warn/Error is already called in repository
 		return nil, err
 	}
 	return s.toDomain(u), nil
