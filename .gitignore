@@ -25,6 +25,7 @@ go.work
 
 # Project specific
 data/
+logs/
 *.db
 *.db-journal
 dvarapala

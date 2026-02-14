@@ -1,10 +1,13 @@
 package http
 
 import (
+	"time"
+
 	_ "dvarapala/docs" // Import generated docs
 	"dvarapala/internal/user"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/httprate"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
@@ -14,6 +17,7 @@ func NewRouter(userHandler *user.Handler) *chi.Mux {
 
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(httprate.LimitByIP(100, 1*time.Minute))
 
 	r.Get("/swagger/*", httpSwagger.Handler(
 		httpSwagger.URL("/swagger/doc.json"), // The url pointing to API definition

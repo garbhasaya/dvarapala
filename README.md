@@ -190,13 +190,18 @@ The database initialization is fully aligned with the Ent migration setup. On ev
 - **API Gateway**: [http://localhost:8080](http://localhost:8080)
 - **Swagger UI**: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
 
-## API endpoints
+## Rate Limiting
 
-- POST /users/auth
-- POST /users/password/forget
-- POST /users/password/reset
-- POST /users
-- GET /users
-- POST /users/{id}
-- DELETE /users/{id}
-- GET /users/{id}
+The API implements rate limiting using `httprate` middleware. By default, it is limited to **100 requests per minute per IP address**. This is configured in `internal/platform/http/router.go`.
+
+## Logging
+
+Structured logging is implemented project-wide using the standard library `log/slog`. Important events such as database initialization, user creation, authentication attempts, and errors are logged with appropriate levels (INFO, WARN, ERROR).
+
+Logs are written to both **stdout** and to a file named `api.log` located in the `logs/` directory.
+
+## Persistence
+
+The project uses Docker volumes to persist data and logs outside the container:
+- **Database**: Stored in `./data/dvarapala.db`.
+- **Logs**: Stored in `./logs/api.log`.

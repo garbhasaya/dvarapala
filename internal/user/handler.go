@@ -2,6 +2,7 @@ package user
 
 import (
 	"encoding/json"
+	"log/slog"
 	"net/http"
 	"strconv"
 
@@ -55,17 +56,20 @@ func (h *Handler) Routes() chi.Router {
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	var req CreateUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		slog.Warn("failed to decode create user request", "error", err)
 		render.Error(w, http.StatusBadRequest, "invalid request body")
 		return
 	}
 
 	if err := h.validate.Struct(req); err != nil {
+		slog.Warn("invalid create user request", "error", err)
 		render.Error(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	u, err := h.svc.Create(r.Context(), req)
 	if err != nil {
+		// slog.Error is already called in service
 		render.Error(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -105,12 +109,14 @@ func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
+		slog.Warn("invalid user id in request", "id", idStr)
 		render.Error(w, http.StatusBadRequest, "invalid user id")
 		return
 	}
 
 	u, err := h.svc.GetByID(r.Context(), id)
 	if err != nil {
+		slog.Warn("user not found", "id", id)
 		render.Error(w, http.StatusNotFound, "user not found")
 		return
 	}
@@ -134,17 +140,20 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
+		slog.Warn("invalid user id in update request", "id", idStr)
 		render.Error(w, http.StatusBadRequest, "invalid user id")
 		return
 	}
 
 	var req UpdateUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		slog.Warn("failed to decode update user request", "id", id, "error", err)
 		render.Error(w, http.StatusBadRequest, "invalid request body")
 		return
 	}
 
 	if err := h.validate.Struct(req); err != nil {
+		slog.Warn("invalid update user request", "id", id, "error", err)
 		render.Error(w, http.StatusBadRequest, err.Error())
 		return
 	}
@@ -172,6 +181,7 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
+		slog.Warn("invalid user id in delete request", "id", idStr)
 		render.Error(w, http.StatusBadRequest, "invalid user id")
 		return
 	}
@@ -198,11 +208,13 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) Authenticate(w http.ResponseWriter, r *http.Request) {
 	var req AuthRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		slog.Warn("failed to decode auth request", "error", err)
 		render.Error(w, http.StatusBadRequest, "invalid request body")
 		return
 	}
 
 	if err := h.validate.Struct(req); err != nil {
+		slog.Warn("invalid auth request", "error", err)
 		render.Error(w, http.StatusBadRequest, err.Error())
 		return
 	}

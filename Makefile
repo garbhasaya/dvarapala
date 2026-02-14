@@ -21,7 +21,11 @@ ps:
 
 # Run tests inside the container
 test:
-	docker-compose run --rm api go test -v ./...
+	docker run --rm -v $(shell pwd):/app -w /app \
+		-e CGO_ENABLED=1 \
+		-e CGO_CFLAGS="-D_LARGEFILE64_SOURCE" \
+		golang:1.26-alpine \
+		sh -c "apk add --no-cache build-base && go test -v ./..."
 
 # Run linter using a docker container
 lint:

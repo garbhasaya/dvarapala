@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 
@@ -22,7 +25,25 @@ import (
 // @BasePath /
 
 func main() {
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	logDir := os.Getenv("LOG_DIR")
+	if logDir == "" {
+		logDir = "logs"
+	}
+
+	if err := os.MkdirAll(logDir, 0755); err != nil {
+		fmt.Printf("failed to create log directory: %v\n", err)
+		os.Exit(1)
+	}
+
+	logFile, err := os.OpenFile(filepath.Join(logDir, "api.log"), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Printf("failed to open log file: %v\n", err)
+		os.Exit(1)
+	}
+	defer logFile.Close()
+
+	mw := io.MultiWriter(os.Stdout, logFile)
+	logger := slog.New(slog.NewJSONHandler(mw, nil))
 	slog.SetDefault(logger)
 
 	dbPath := os.Getenv("DB_PATH")

@@ -25,7 +25,7 @@ FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates sqlite-libs
 
-WORKDIR /root/
+WORKDIR /app
 
 # Copy the binary from the builder stage
 COPY --from=builder /app/dvarapala .
