@@ -74,6 +74,7 @@ To ensure codebase health and consistency, the following steps **must** be compl
 - `make build`: Build Docker images.
 - `make up`: Start services in the background.
 - `make down`: Stop services.
+- `make deps-upgrade`: Update Go dependencies using a Docker container.
 - `make test`: Run unit tests in a fresh Go container.
 - `make logs`: Follow container logs.
 - `make swag`: Regenerate Swagger documentation.

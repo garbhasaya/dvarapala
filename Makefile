@@ -39,6 +39,13 @@ swag:
 shell:
 	docker-compose exec api sh
 
+# Update Go dependencies
+deps-upgrade:
+	docker run --rm -v $(shell pwd):/app -w /app \
+		golang:1.26-alpine \
+		sh -c "go get -u ./... && go mod tidy"
+	$(MAKE) test
+
 # Database migrations
 migrate-gen:
 	docker run --rm -v $(shell pwd):/app -w /app \
