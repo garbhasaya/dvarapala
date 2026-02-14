@@ -59,6 +59,14 @@ Dvarapala is a microservice for user management, providing RESTful APIs for auth
 
 ## Development Workflow
 
+### Mandatory Workflow for Every Change
+To ensure codebase health and consistency, the following steps **must** be completed for every modification or new feature:
+1.  **Write Unit Tests**: Every new feature or bug fix must include corresponding unit tests (e.g., `*_test.go`).
+2.  **Update Swagger Documentation**: If any API endpoints are added or modified, regenerate documentation using `make swag`.
+3.  **Update README.md**: Ensure any new features, endpoints, or configuration changes are documented in `README.md`.
+4.  **Update Makefile**: If new development commands are required, add them to the `Makefile` and update the documentation accordingly.
+5.  **Run All Tests**: Verify that all tests pass by running `make test`.
+
 ### Common Commands (Makefile)
 - `make build`: Build Docker images.
 - `make up`: Start services in the background.
@@ -88,6 +96,7 @@ Dvarapala is a microservice for user management, providing RESTful APIs for auth
 | UpdatedAt  | datetime  | Last update timestamp                |
 
 ## API Endpoints
+- `GET /health`: Check service health.
 - `POST /users`: Create a new user.
 - `GET /users`: List all users.
 - `POST /users/auth`: Authenticate and get JWT.

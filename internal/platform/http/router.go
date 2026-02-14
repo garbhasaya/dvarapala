@@ -23,6 +23,8 @@ func NewRouter(userHandler *user.Handler) *chi.Mux {
 		httpSwagger.URL("/swagger/doc.json"), // The url pointing to API definition
 	))
 
+	r.Get("/health", HealthHandler)
+
 	r.Mount("/users", userHandler.Routes())
 
 	return r

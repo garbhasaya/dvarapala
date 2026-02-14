@@ -188,7 +188,19 @@ The database initialization is fully aligned with the Ent migration setup. On ev
 ## Service URLs
 
 - **API Gateway**: [http://localhost:8080](http://localhost:8080)
+- **Health Check**: [http://localhost:8080/health](http://localhost:8080/health)
 - **Swagger UI**: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
+
+## API Endpoints
+
+- `GET /health`: Check service health.
+- `POST /users`: Create a new user.
+- `GET /users`: List all users.
+- `POST /users/auth`: Authenticate and get JWT.
+- `GET /users/{id}`: Get user by ID.
+- `POST /users/{id}`: Update user by ID.
+- `DELETE /users/{id}`: Delete user by ID.
+- `GET /swagger/*`: Swagger UI.
 
 ## Rate Limiting
 

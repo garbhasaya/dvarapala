@@ -82,6 +82,19 @@ info:
   title: Dvarapala API
   version: "1.0"
 paths:
+  /health:
+    get:
+      description: Get the health status of the service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
+      summary: Check service health
+      tags:
+      - health
   /users:
     get:
       description: Get a list of all registered users
