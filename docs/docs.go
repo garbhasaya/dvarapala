@@ -17,11 +17,6 @@ const docTemplate = `{
     "paths": {
         "/health": {
             "get": {
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ],
                 "description": "Get the health status of the service",
                 "produces": [
                     "application/json"
@@ -33,12 +28,6 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/dvarapala_internal_platform_render.Response"
                         }
@@ -167,11 +156,6 @@ const docTemplate = `{
         },
         "/users/auth": {
             "post": {
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ],
                 "description": "Login with email and password to receive a JWT token",
                 "consumes": [
                     "application/json"

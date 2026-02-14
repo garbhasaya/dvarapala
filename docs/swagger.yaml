@@ -92,12 +92,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/dvarapala_internal_platform_render.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/dvarapala_internal_platform_render.Response'
-      security:
-      - Bearer: []
       summary: Check service health
       tags:
       - health
@@ -316,8 +310,6 @@ paths:
           description: Unauthorized
           schema:
             $ref: '#/definitions/dvarapala_internal_platform_render.Response'
-      security:
-      - Bearer: []
       summary: Authenticate user
       tags:
       - users

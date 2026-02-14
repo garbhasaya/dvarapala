@@ -19,7 +19,6 @@ func NewRouter(userHandler *user.Handler, jwtManager *auth.JWTManager) *chi.Mux 
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(httprate.LimitByIP(100, 1*time.Minute))
-	r.Use(auth.Middleware(jwtManager))
 
 	r.Get("/swagger/*", httpSwagger.Handler(
 		httpSwagger.URL("/swagger/doc.json"), // The url pointing to API definition
@@ -27,7 +26,7 @@ func NewRouter(userHandler *user.Handler, jwtManager *auth.JWTManager) *chi.Mux 
 
 	r.Get("/health", HealthHandler)
 
-	r.Mount("/users", userHandler.Routes())
+	r.Mount("/users", userHandler.Routes(jwtManager))
 
 	return r
 }

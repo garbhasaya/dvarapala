@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"dvarapala/internal/platform/auth"
 	"dvarapala/internal/platform/render"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
@@ -26,17 +27,24 @@ func NewHandler(svc Service) *Handler {
 }
 
 // Routes returns the chi router for user endpoints.
-func (h *Handler) Routes() chi.Router {
+func (h *Handler) Routes(jwtManager *auth.JWTManager) chi.Router {
 	r := chi.NewRouter()
 
-	r.Post("/", h.Create)
-	r.Get("/", h.List)
+	// Public routes
 	r.Post("/auth", h.Authenticate)
-	
-	r.Route("/{id}", func(r chi.Router) {
-		r.Get("/", h.GetByID)
-		r.Post("/", h.Update) // README said POST for update
-		r.Delete("/", h.Delete)
+
+	// Protected routes
+	r.Group(func(r chi.Router) {
+		r.Use(auth.Middleware(jwtManager))
+		
+		r.Post("/", h.Create)
+		r.Get("/", h.List)
+		
+		r.Route("/{id}", func(r chi.Router) {
+			r.Get("/", h.GetByID)
+			r.Post("/", h.Update) // README said POST for update
+			r.Delete("/", h.Delete)
+		})
 	})
 
 	return r
@@ -214,7 +222,6 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} render.Response{data=AuthResponse}
 // @Failure 400 {object} render.Response
 // @Failure 401 {object} render.Response
-// @Security Bearer
 // @Router /users/auth [post]
 func (h *Handler) Authenticate(w http.ResponseWriter, r *http.Request) {
 	var req AuthRequest

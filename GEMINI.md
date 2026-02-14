@@ -64,10 +64,11 @@ To ensure codebase health and consistency, the following steps **must** be compl
 1.  **Structured Logging**: Add or update structured logging (using `slog`) to capture important events, business logic milestones, and error conditions.
 2.  **Write Unit Tests**: Every new feature or bug fix must include corresponding unit tests (e.g., `*_test.go`).
 3.  **Update Makefile**: If new development commands are required, add them to the `Makefile` and update the documentation accordingly.
-4.  **Update Swagger Documentation**: If any API endpoints are added or modified, regenerate documentation using `make swag`.
-5.  **Update README.md**: Ensure any new features, endpoints, or configuration changes are documented in `README.md`.
-6.  **Update GEMINI.md**: Ensure this project guide is updated to reflect any changes in architecture, workflows, or documentation standards.
-7.  **Run All Tests**: Verify that all tests pass by running `make test`.
+4.  **Run Linter**: Ensure code quality by running `make lint` after code and test changes.
+5.  **Update Swagger Documentation**: If any API endpoints are added or modified, regenerate documentation using `make swag`.
+6.  **Update README.md**: Ensure any new features, endpoints, or configuration changes are documented in `README.md`.
+7.  **Update GEMINI.md**: Ensure this project guide is updated to reflect any changes in architecture, workflows, or documentation standards.
+8.  **Run All Tests**: Verify that all tests pass by running `make test`.
 
 ### Common Commands (Makefile)
 - `make build`: Build Docker images.

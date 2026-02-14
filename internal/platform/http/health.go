@@ -13,8 +13,6 @@ import (
 // @Tags health
 // @Produce json
 // @Success 200 {object} render.Response
-// @Failure 401 {object} render.Response
-// @Security Bearer
 // @Router /health [get]
 func HealthHandler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("health check requested", "remote_addr", r.RemoteAddr)
