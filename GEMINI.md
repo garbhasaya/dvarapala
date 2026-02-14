@@ -58,6 +58,19 @@ Dvarapala is a microservice for user management, providing RESTful APIs for auth
 - **Graceful Shutdown**: The API server handles `SIGINT` and `SIGTERM` for graceful termination.
 - **Database Conventions**: All database table names **must** be in singular format (e.g., `user` instead of `users`). This is enforced in the Ent schema using `entsql.Annotation`.
 
+## Naming Conventions
+- **Packages**: Short, lowercase, single-word names (e.g., `user`, `auth`). Avoid underscores or mixedCaps.
+- **Files**: Lowercase, using underscores only if necessary (e.g., `handler.go`, `service_test.go`).
+- **Variables & Constants**: Use `CamelCase` (`MixedCaps` for exported, `mixedCaps` for unexported). Keep acronyms consistent (e.g., `userID`, `APIKey`).
+- **Receivers**: Use short, consistent names (1-3 letters) representing the type (e.g., `func (u *User) ...`).
+- **Interfaces**: Name based on behavior, often ending in `-er` for single-action interfaces (e.g., `Reader`), or use descriptive nouns for domain logic (e.g., `Service`, `Repository`).
+- **REST API Components**:
+    - **Handlers**: `[Action][Entity]` (e.g., `CreateUser`, `ListUsers`).
+    - **Services**: `[Entity]Service`.
+    - **Repositories**: `[Entity]Repository`.
+    - **Models**: Use `[Entity]` for domain models and `[Action][Entity]Request/Response` for DTOs.
+- **Database**: Table names and Ent schemas **must** be singular (e.g., `user`).
+
 ## Development Workflow
 
 ### Mandatory Workflow for Every Change
@@ -71,6 +84,7 @@ To ensure codebase health and consistency, the following steps **must** be compl
 7.  **Update README.md**: Ensure any new features, endpoints, or configuration changes are documented in `README.md`.
 8.  **Update GEMINI.md**: Ensure this project guide is updated to reflect any changes in architecture, workflows, or documentation standards.
 9.  **Run All Tests**: Verify that all tests pass by running `make test`.
+10. **Follow Naming Conventions**: Adhere to the project's naming conventions for packages, files, variables, and API components as defined in this document.
 
 ### Common Commands (Makefile)
 - `make build`: Build Docker images.

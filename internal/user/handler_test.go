@@ -93,7 +93,8 @@ func TestHandler_Create(t *testing.T) {
 	assert.Equal(t, http.StatusCreated, rr.Code)
 
 	var resp render.Response
-	json.Unmarshal(rr.Body.Bytes(), &resp)
+	err := json.Unmarshal(rr.Body.Bytes(), &resp)
+	assert.NoError(t, err)
 
 	// Convert map to struct for easier comparison if needed,
 	// or just check fields from the map
@@ -129,7 +130,8 @@ func TestHandler_Authenticate(t *testing.T) {
 	assert.Equal(t, http.StatusOK, rr.Code)
 
 	var resp render.Response
-	json.Unmarshal(rr.Body.Bytes(), &resp)
+	err := json.Unmarshal(rr.Body.Bytes(), &resp)
+	assert.NoError(t, err)
 
 	dataMap := resp.Data.(map[string]interface{})
 	assert.Equal(t, expectedResp.Token, dataMap["token"])

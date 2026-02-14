@@ -14,7 +14,10 @@ import (
 
 func TestService_Create(t *testing.T) {
 	client := enttest.Open(t, "sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
-	defer client.Close()
+	defer func() {
+		err := client.Close()
+		assert.NoError(t, err)
+	}()
 
 	repo := NewRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)
@@ -39,7 +42,10 @@ func TestService_Create(t *testing.T) {
 
 func TestService_Authenticate(t *testing.T) {
 	client := enttest.Open(t, "sqlite3", "file:ent_auth?mode=memory&cache=shared&_fk=1")
-	defer client.Close()
+	defer func() {
+		err := client.Close()
+		assert.NoError(t, err)
+	}()
 
 	repo := NewRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)
@@ -90,7 +96,10 @@ func TestService_Authenticate(t *testing.T) {
 
 func TestService_Update(t *testing.T) {
 	client := enttest.Open(t, "sqlite3", "file:ent_update?mode=memory&cache=shared&_fk=1")
-	defer client.Close()
+	defer func() {
+		err := client.Close()
+		assert.NoError(t, err)
+	}()
 
 	repo := NewRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)
@@ -121,7 +130,10 @@ func TestService_Update(t *testing.T) {
 
 func TestService_Delete(t *testing.T) {
 	client := enttest.Open(t, "sqlite3", "file:ent_delete?mode=memory&cache=shared&_fk=1")
-	defer client.Close()
+	defer func() {
+		err := client.Close()
+		assert.NoError(t, err)
+	}()
 
 	repo := NewRepository(client)
 	jwtManager := auth.NewJWTManager("secret", time.Hour)

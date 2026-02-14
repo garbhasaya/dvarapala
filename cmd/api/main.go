@@ -47,7 +47,11 @@ func main() {
 		fmt.Printf("failed to open log file: %v\n", err)
 		os.Exit(1)
 	}
-	defer logFile.Close()
+	defer func() {
+		if err := logFile.Close(); err != nil {
+			fmt.Printf("failed to close log file: %v\n", err)
+		}
+	}()
 
 	mw := io.MultiWriter(os.Stdout, logFile)
 	logger := slog.New(slog.NewJSONHandler(mw, nil))
@@ -58,7 +62,11 @@ func main() {
 		slog.Error("failed to open sqlite client", "error", err)
 		os.Exit(1)
 	}
-	defer client.Close()
+	defer func() {
+		if err := client.Close(); err != nil {
+			slog.Error("failed to close sqlite client", "error", err)
+		}
+	}()
 
 	// Auth setup
 	jwtManager := auth.NewJWTManager(cfg.Auth.JWTSecret, cfg.Auth.JWTExpiry)
