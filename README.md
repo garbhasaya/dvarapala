@@ -166,7 +166,7 @@ Update the schema definitions in the `ent/schema/` directory (e.g., `ent/schema/
 ### 2. Generate Ent Code
 After modifying the schema, regenerate the Ent runtime code:
 ```bash
-docker run --rm -v $(pwd):/app -w /app golang:1.26-alpine go generate ./ent/...
+make generate
 ```
 
 ### 3. Generate Migration Files
