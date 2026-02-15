@@ -1,4 +1,6 @@
-# Project overview
+# Dvarapala (gatekeeper)
+
+A microservice providing functionality of authentication and authorisation.
 
 # Architecture
 
