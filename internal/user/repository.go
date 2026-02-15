@@ -34,12 +34,15 @@ func (r *UserRepository) Create(ctx context.Context, u *ent.User) (*ent.User, er
 		slog.Error("database error: failed to create user", "email", u.Email, "error", err)
 		return nil, err
 	}
-	return created, nil
+	return r.GetByID(ctx, created.ID)
 }
 
 // GetByID retrieves a user by their ID.
 func (r *UserRepository) GetByID(ctx context.Context, id int) (*ent.User, error) {
-	u, err := r.client.User.Get(ctx, id)
+	u, err := r.client.User.Query().
+		Where(user.IDEQ(id)).
+		WithApp().
+		Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			slog.Warn("user not found in database", "id", id)
@@ -55,6 +58,7 @@ func (r *UserRepository) GetByID(ctx context.Context, id int) (*ent.User, error)
 func (r *UserRepository) GetByEmail(ctx context.Context, email string) (*ent.User, error) {
 	u, err := r.client.User.Query().
 		Where(user.EmailEQ(email)).
+		WithApp().
 		Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -69,7 +73,7 @@ func (r *UserRepository) GetByEmail(ctx context.Context, email string) (*ent.Use
 
 // List retrieves all users.
 func (r *UserRepository) List(ctx context.Context) ([]*ent.User, error) {
-	users, err := r.client.User.Query().All(ctx)
+	users, err := r.client.User.Query().WithApp().All(ctx)
 	if err != nil {
 		slog.Error("database error: failed to list users", "error", err)
 		return nil, err
@@ -91,7 +95,7 @@ func (r *UserRepository) Update(ctx context.Context, id int, u *ent.User) (*ent.
 		slog.Error("database error: failed to update user", "id", id, "error", err)
 		return nil, err
 	}
-	return updated, nil
+	return r.GetByID(ctx, updated.ID)
 }
 
 // Delete deletes a user by their ID.

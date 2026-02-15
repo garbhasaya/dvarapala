@@ -97,6 +97,9 @@ func (s *userService) Update(ctx context.Context, id int, req UpdateUserRequest)
 	if req.Lastname != nil {
 		existing.Lastname = *req.Lastname
 	}
+	if req.AppID != nil {
+		existing.AppID = *req.AppID
+	}
 	if req.Email != nil {
 		existing.Email = *req.Email
 	}
@@ -161,7 +164,7 @@ func (s *userService) Authenticate(ctx context.Context, req AuthRequest) (*AuthR
 }
 
 func (s *userService) toDomain(u *ent.User) *User {
-	return &User{
+	domainUser := &User{
 		ID:        u.ID,
 		AppID:     u.AppID,
 		Firstname: u.Firstname,
@@ -171,4 +174,10 @@ func (s *userService) toDomain(u *ent.User) *User {
 		CreatedAt: u.CreatedAt,
 		UpdatedAt: u.UpdatedAt,
 	}
+
+	if u.Edges.App != nil {
+		domainUser.AppName = u.Edges.App.Name
+	}
+
+	return domainUser
 }

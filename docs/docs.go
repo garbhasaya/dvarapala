@@ -817,6 +817,9 @@ const docTemplate = `{
         "internal_user.UpdateUserRequest": {
             "type": "object",
             "properties": {
+                "app_id": {
+                    "type": "integer"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -840,6 +843,9 @@ const docTemplate = `{
             "properties": {
                 "app_id": {
                     "type": "integer"
+                },
+                "app_name": {
+                    "type": "string"
                 },
                 "created_at": {
                     "type": "string"

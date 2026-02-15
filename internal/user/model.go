@@ -8,6 +8,7 @@ import (
 type User struct {
 	ID        int       `json:"id"`
 	AppID     int       `json:"app_id"`
+	AppName   string    `json:"app_name"`
 	Firstname string    `json:"firstname"`
 	Lastname  string    `json:"lastname"`
 	Email     string    `json:"email"`
@@ -28,6 +29,7 @@ type CreateUserRequest struct {
 
 // UpdateUserRequest defines the payload for updating a user.
 type UpdateUserRequest struct {
+	AppID     *int    `json:"app_id"`
 	Firstname *string `json:"firstname"`
 	Lastname  *string `json:"lastname"`
 	Email     *string `json:"email" validate:"omitempty,email"`

@@ -43,6 +43,7 @@ func TestService_Create(t *testing.T) {
 	assert.Equal(t, req.Email, u.Email)
 	assert.Equal(t, req.Firstname, u.Firstname)
 	assert.Equal(t, req.Lastname, u.Lastname)
+	assert.Equal(t, "Test App", u.AppName)
 	assert.Equal(t, int8(1), u.Status)
 }
 
@@ -82,6 +83,7 @@ func TestService_Authenticate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, res.Token)
 		assert.Equal(t, email, res.User.Email)
+		assert.Equal(t, "Auth App", res.User.AppName)
 	})
 
 	t.Run("InvalidPassword", func(t *testing.T) {
@@ -131,17 +133,24 @@ func TestService_Update(t *testing.T) {
 	})
 	assert.NoError(t, err)
 
+	// Create another app for update
+	newApp, err := client.App.Create().SetName("New App").Save(ctx)
+	assert.NoError(t, err)
+
 	newName := "Updated"
 	newStatus := int8(0)
 	req := UpdateUserRequest{
 		Firstname: &newName,
 		Status:    &newStatus,
+		AppID:     &newApp.ID,
 	}
 
 	updated, err := svc.Update(ctx, u.ID, req)
 	assert.NoError(t, err)
 	assert.Equal(t, newName, updated.Firstname)
 	assert.Equal(t, newStatus, updated.Status)
+	assert.Equal(t, newApp.ID, updated.AppID)
+	assert.Equal(t, "New App", updated.AppName)
 	assert.Equal(t, u.Email, updated.Email) // Should remain unchanged
 }
 

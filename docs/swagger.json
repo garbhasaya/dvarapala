@@ -811,6 +811,9 @@
         "internal_user.UpdateUserRequest": {
             "type": "object",
             "properties": {
+                "app_id": {
+                    "type": "integer"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -834,6 +837,9 @@
             "properties": {
                 "app_id": {
                     "type": "integer"
+                },
+                "app_name": {
+                    "type": "string"
                 },
                 "created_at": {
                     "type": "string"
