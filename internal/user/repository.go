@@ -23,6 +23,7 @@ func NewUserRepository(client *ent.Client) *UserRepository {
 func (r *UserRepository) Create(ctx context.Context, u *ent.User) (*ent.User, error) {
 	created, err := r.client.User.
 		Create().
+		SetAppID(u.AppID).
 		SetFirstname(u.Firstname).
 		SetLastname(u.Lastname).
 		SetEmail(u.Email).
@@ -79,6 +80,7 @@ func (r *UserRepository) List(ctx context.Context) ([]*ent.User, error) {
 // Update updates an existing user.
 func (r *UserRepository) Update(ctx context.Context, id int, u *ent.User) (*ent.User, error) {
 	updated, err := r.client.User.UpdateOneID(id).
+		SetAppID(u.AppID).
 		SetFirstname(u.Firstname).
 		SetLastname(u.Lastname).
 		SetEmail(u.Email).

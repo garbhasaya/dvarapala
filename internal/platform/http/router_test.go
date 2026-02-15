@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"dvarapala/internal/app"
 	"dvarapala/internal/user"
 	"dvarapala/pkg/auth"
 	"dvarapala/pkg/config"
@@ -27,17 +28,29 @@ func (m *mockUserService) Authenticate(ctx context.Context, req user.AuthRequest
 	return &user.AuthResponse{}, nil
 }
 
+type mockAppService struct {
+	app.AppService
+}
+
+func (m *mockAppService) List(ctx context.Context) ([]*app.App, error) {
+	return []*app.App{}, nil
+}
+
 func TestRouterAuthentication(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
 	// Use a mock service to avoid nil pointer dereference in handlers
-	svc := &mockUserService{}
-	userHandler := user.NewUserHandler(svc)
+	userSvc := &mockUserService{}
+	userHandler := user.NewUserHandler(userSvc)
+
+	appSvc := &mockAppService{}
+	appHandler := app.NewAppHandler(appSvc)
+
 	cfg := &config.Config{
 		CORS: config.CORSConfig{
 			AllowedOrigins: []string{"*"},
 		},
 	}
-	router := NewRouter(userHandler, jwtManager, cfg)
+	router := NewRouter(userHandler, appHandler, jwtManager, cfg)
 
 	tests := []struct {
 		name           string
@@ -74,14 +87,18 @@ func TestRouterAuthentication(t *testing.T) {
 
 func TestRouterAuthentication_ValidToken(t *testing.T) {
 	jwtManager := auth.NewJWTManager("secret", 1*time.Hour)
-	svc := &mockUserService{}
-	userHandler := user.NewUserHandler(svc)
+	userSvc := &mockUserService{}
+	userHandler := user.NewUserHandler(userSvc)
+
+	appSvc := &mockAppService{}
+	appHandler := app.NewAppHandler(appSvc)
+
 	cfg := &config.Config{
 		CORS: config.CORSConfig{
 			AllowedOrigins: []string{"*"},
 		},
 	}
-	router := NewRouter(userHandler, jwtManager, cfg)
+	router := NewRouter(userHandler, appHandler, jwtManager, cfg)
 
 	token, _ := jwtManager.Generate(1)
 

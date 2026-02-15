@@ -7,6 +7,7 @@ import (
 // User represents the domain model for a user.
 type User struct {
 	ID        int       `json:"id"`
+	AppID     int       `json:"app_id"`
 	Firstname string    `json:"firstname"`
 	Lastname  string    `json:"lastname"`
 	Email     string    `json:"email"`
@@ -18,6 +19,7 @@ type User struct {
 
 // CreateUserRequest defines the payload for creating a user.
 type CreateUserRequest struct {
+	AppID     int    `json:"app_id" validate:"required"`
 	Firstname string `json:"firstname" validate:"required"`
 	Lastname  string `json:"lastname" validate:"required"`
 	Email     string `json:"email" validate:"required,email"`

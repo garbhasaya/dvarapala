@@ -4,6 +4,7 @@ import (
 	"time"
 
 	_ "dvarapala/docs" // Import generated docs
+	"dvarapala/internal/app"
 	"dvarapala/internal/user"
 	"dvarapala/pkg/auth"
 	"dvarapala/pkg/config"
@@ -16,7 +17,7 @@ import (
 )
 
 // NewRouter creates a new chi router with default middleware and application routes.
-func NewRouter(userHandler *user.UserHandler, jwtManager *auth.JWTManager, cfg *config.Config) *chi.Mux {
+func NewRouter(userHandler *user.UserHandler, appHandler *app.AppHandler, jwtManager *auth.JWTManager, cfg *config.Config) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
@@ -42,6 +43,7 @@ func NewRouter(userHandler *user.UserHandler, jwtManager *auth.JWTManager, cfg *
 	r.Get("/health", HealthHandler)
 
 	r.Mount("/users", userHandler.Routes(jwtManager))
+	r.Mount("/apps", appHandler.Routes(jwtManager))
 
 	return r
 }

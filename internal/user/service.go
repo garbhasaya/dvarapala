@@ -41,6 +41,7 @@ func (s *userService) Create(ctx context.Context, req CreateUserRequest) (*User,
 	}
 
 	u := &ent.User{
+		AppID:     req.AppID,
 		Firstname: req.Firstname,
 		Lastname:  req.Lastname,
 		Email:     req.Email,
@@ -162,6 +163,7 @@ func (s *userService) Authenticate(ctx context.Context, req AuthRequest) (*AuthR
 func (s *userService) toDomain(u *ent.User) *User {
 	return &User{
 		ID:        u.ID,
+		AppID:     u.AppID,
 		Firstname: u.Firstname,
 		Lastname:  u.Lastname,
 		Email:     u.Email,

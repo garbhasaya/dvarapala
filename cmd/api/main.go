@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"dvarapala/docs"
+	"dvarapala/internal/app"
 	"dvarapala/internal/db"
 	platformhttp "dvarapala/internal/platform/http"
 	"dvarapala/internal/user"
@@ -80,7 +81,11 @@ func main() {
 	userSvc := user.NewUserService(userRepo, jwtManager)
 	userHandler := user.NewUserHandler(userSvc)
 
-	router := platformhttp.NewRouter(userHandler, jwtManager, cfg)
+	appRepo := app.NewAppRepository(client)
+	appSvc := app.NewAppService(appRepo)
+	appHandler := app.NewAppHandler(appSvc)
+
+	router := platformhttp.NewRouter(userHandler, appHandler, jwtManager, cfg)
 
 	srv := &http.Server{
 		Addr:         cfg.Server.Addr,

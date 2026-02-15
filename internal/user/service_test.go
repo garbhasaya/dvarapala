@@ -24,7 +24,13 @@ func TestService_Create(t *testing.T) {
 	svc := NewUserService(repo, jwtManager)
 
 	ctx := context.Background()
+
+	// Create an app first as it's required for user
+	app, err := client.App.Create().SetName("Test App").Save(ctx)
+	assert.NoError(t, err)
+
 	req := CreateUserRequest{
+		AppID:     app.ID,
 		Firstname: "John",
 		Lastname:  "Doe",
 		Email:     "john@example.com",
@@ -55,7 +61,12 @@ func TestService_Authenticate(t *testing.T) {
 	email := "auth@example.com"
 	password := "password123"
 
-	_, err := svc.Create(ctx, CreateUserRequest{
+	// Create an app first as it's required for user
+	app, err := client.App.Create().SetName("Auth App").Save(ctx)
+	assert.NoError(t, err)
+
+	_, err = svc.Create(ctx, CreateUserRequest{
+		AppID:     app.ID,
 		Firstname: "Auth",
 		Lastname:  "User",
 		Email:     email,
@@ -106,7 +117,13 @@ func TestService_Update(t *testing.T) {
 	svc := NewUserService(repo, jwtManager)
 
 	ctx := context.Background()
+
+	// Create an app first as it's required for user
+	app, err := client.App.Create().SetName("Update App").Save(ctx)
+	assert.NoError(t, err)
+
 	u, err := svc.Create(ctx, CreateUserRequest{
+		AppID:     app.ID,
 		Firstname: "Original",
 		Lastname:  "Name",
 		Email:     "original@example.com",
@@ -140,7 +157,13 @@ func TestService_Delete(t *testing.T) {
 	svc := NewUserService(repo, jwtManager)
 
 	ctx := context.Background()
+
+	// Create an app first as it's required for user
+	app, err := client.App.Create().SetName("Delete App").Save(ctx)
+	assert.NoError(t, err)
+
 	u, err := svc.Create(ctx, CreateUserRequest{
+		AppID:     app.ID,
 		Firstname: "Delete",
 		Lastname:  "Me",
 		Email:     "delete@example.com",

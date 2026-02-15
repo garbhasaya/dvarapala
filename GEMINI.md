@@ -24,6 +24,13 @@ Dvarapala is a microservice for user management, providing RESTful APIs for auth
 │   └── api/
 │       └── main.go         # Application entry point
 ├── internal/
+│   ├── app/                # App domain logic
+│   │   ├── handler.go      # HTTP handlers
+│   │   ├── service.go      # Business logic
+│   │   ├── repository.go   # Data access logic
+│   │   ├── model.go        # Domain & Request/Response models
+│   │   ├── service_test.go # Unit tests for service
+│   │   └── handler_test.go # Unit tests for handler
 │   ├── user/               # User domain logic
 │   │   ├── handler.go      # HTTP handlers
 │   │   ├── service.go      # Business logic
@@ -114,16 +121,48 @@ To ensure codebase health and consistency, the following steps **must** be compl
 4.  **Apply**: `make migrate-apply` (or restart the app for auto-migration).
 
 ### Database Schema (user table)
+
 | Field      | Type      | Description                          |
+
 |------------|-----------|--------------------------------------|
+
 | ID         | int       | Primary Key (Auto-increment)         |
+
+| AppID      | int       | Foreign Key to app                   |
+
 | Firstname  | string    | User's first name                    |
+
 | Lastname   | string    | User's last name                     |
+
 | Email      | string    | Unique email address                 |
+
 | Password   | string    | Hashed password (sensitive)          |
+
 | Status     | smallint  | 0 (Inactive), 1 (Active)             |
+
 | CreatedAt  | datetime  | Creation timestamp                   |
+
 | UpdatedAt  | datetime  | Last update timestamp                |
+
+
+
+### Database Schema (app table)
+
+| Field      | Type      | Description                          |
+
+|------------|-----------|--------------------------------------|
+
+| ID         | int       | Primary Key (Auto-increment)         |
+
+| Name       | string    | Unique app name                      |
+
+| Status     | smallint  | 0 (Inactive), 1 (Active)             |
+
+| CreatedAt  | datetime  | Creation timestamp                   |
+
+| UpdatedAt  | datetime  | Last update timestamp                |
+
+
 
 ## API Endpoints
 - `GET /health`: Check service health.
@@ -133,6 +172,11 @@ To ensure codebase health and consistency, the following steps **must** be compl
 - `GET /users/{id}`: Get user by ID.
 - `PUT /users/{id}`: Update user by ID.
 - `DELETE /users/{id}`: Delete user by ID.
+- `POST /apps`: Create a new app.
+- `GET /apps`: List all apps.
+- `GET /apps/{id}`: Get app by ID.
+- `PUT /apps/{id}`: Update app by ID.
+- `DELETE /apps/{id}`: Delete app by ID.
 - `GET /swagger/*`: Swagger UI.
 
 ## Logging & Monitoring

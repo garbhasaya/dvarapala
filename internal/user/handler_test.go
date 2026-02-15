@@ -68,6 +68,7 @@ func TestHandler_Create(t *testing.T) {
 	handler := NewUserHandler(svc)
 
 	reqBody := CreateUserRequest{
+		AppID:     1,
 		Firstname: "Hiren",
 		Lastname:  "Chhatbar",
 		Email:     "hiren@example.com",
@@ -76,6 +77,7 @@ func TestHandler_Create(t *testing.T) {
 
 	expectedUser := &User{
 		ID:        1,
+		AppID:     reqBody.AppID,
 		Firstname: reqBody.Firstname,
 		Lastname:  reqBody.Lastname,
 		Email:     reqBody.Email,

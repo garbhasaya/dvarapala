@@ -202,10 +202,19 @@ The database initialization is fully aligned with the Ent migration setup. On ev
 ### user
 
 - ID - int - primary key - auto increment
+- AppID - int - foreign key to app
 - Firstname
 - Lastname
 - Email
 - Password
+- Status - smallint - 0 or 1
+- Created at
+- Updated at
+
+### app
+
+- ID - int - primary key - auto increment
+- Name - string - unique
 - Status - smallint - 0 or 1
 - Created at
 - Updated at
@@ -245,8 +254,13 @@ By default, the services are available at:
 - `GET /users`: List all users.
 - `POST /users/auth`: Authenticate and get JWT.
 - `GET /users/{id}`: Get user by ID.
-- `POST /users/{id}`: Update user by ID.
+- `PUT /users/{id}`: Update user by ID.
 - `DELETE /users/{id}`: Delete user by ID.
+- `POST /apps`: Create a new app.
+- `GET /apps`: List all apps.
+- `GET /apps/{id}`: Get app by ID.
+- `PUT /apps/{id}`: Update app by ID.
+- `DELETE /apps/{id}`: Delete app by ID.
 - `GET /swagger/*`: Swagger UI.
 
 ## Rate Limiting
