@@ -100,7 +100,7 @@ func TestRouterAuthentication_ValidToken(t *testing.T) {
 	}
 	router := NewRouter(userHandler, appHandler, jwtManager, cfg)
 
-	token, _ := jwtManager.Generate(1)
+	token, _ := jwtManager.Generate(1, 1)
 
 	req, _ := http.NewRequest("GET", "/users", nil)
 	req.Header.Set("Authorization", "Bearer "+token)

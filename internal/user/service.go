@@ -150,7 +150,7 @@ func (s *userService) Authenticate(ctx context.Context, req AuthRequest) (*AuthR
 		return nil, errors.New("invalid credentials")
 	}
 
-	token, err := s.jwt.Generate(u.ID)
+	token, err := s.jwt.Generate(u.AppID, u.ID)
 	if err != nil {
 		slog.Error("failed to generate JWT token", "id", u.ID, "error", err)
 		return nil, fmt.Errorf("generate token: %w", err)
