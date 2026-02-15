@@ -105,6 +105,7 @@ To ensure codebase health and consistency, the following steps **must** be compl
 - `make swag`: Regenerate Swagger documentation.
 - `make migrate-gen name=NAME`: Generate a new database migration.
 - `make migrate-apply`: Apply pending migrations.
+- `make sql query=QUERY`: Run a SQL query against the SQLite database.
 
 ### Database Migrations
 1.  **Modify Schema**: Edit `ent/schema/user.go`.
