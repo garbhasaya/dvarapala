@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -54,6 +55,11 @@ func IDLTE(id int) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldID, id))
 }
 
+// AppID applies equality check predicate on the "app_id" field. It's identical to AppIDEQ.
+func AppID(v int) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldAppID, v))
+}
+
 // Firstname applies equality check predicate on the "firstname" field. It's identical to FirstnameEQ.
 func Firstname(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldFirstname, v))
@@ -87,6 +93,26 @@ func CreatedAt(v time.Time) predicate.User {
 // UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
 func UpdatedAt(v time.Time) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldUpdatedAt, v))
+}
+
+// AppIDEQ applies the EQ predicate on the "app_id" field.
+func AppIDEQ(v int) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldAppID, v))
+}
+
+// AppIDNEQ applies the NEQ predicate on the "app_id" field.
+func AppIDNEQ(v int) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldAppID, v))
+}
+
+// AppIDIn applies the In predicate on the "app_id" field.
+func AppIDIn(vs ...int) predicate.User {
+	return predicate.User(sql.FieldIn(FieldAppID, vs...))
+}
+
+// AppIDNotIn applies the NotIn predicate on the "app_id" field.
+func AppIDNotIn(vs ...int) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldAppID, vs...))
 }
 
 // FirstnameEQ applies the EQ predicate on the "firstname" field.
@@ -467,6 +493,29 @@ func UpdatedAtLT(v time.Time) predicate.User {
 // UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
 func UpdatedAtLTE(v time.Time) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// HasApp applies the HasEdge predicate on the "app" edge.
+func HasApp() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, AppTable, AppColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasAppWith applies the HasEdge predicate on the "app" edge with a given conditions (other predicates).
+func HasAppWith(preds ...predicate.App) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := newAppStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

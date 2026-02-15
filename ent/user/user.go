@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -13,6 +14,8 @@ const (
 	Label = "user"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldAppID holds the string denoting the app_id field in the database.
+	FieldAppID = "app_id"
 	// FieldFirstname holds the string denoting the firstname field in the database.
 	FieldFirstname = "firstname"
 	// FieldLastname holds the string denoting the lastname field in the database.
@@ -27,13 +30,23 @@ const (
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
 	FieldUpdatedAt = "updated_at"
+	// EdgeApp holds the string denoting the app edge name in mutations.
+	EdgeApp = "app"
 	// Table holds the table name of the user in the database.
 	Table = "user"
+	// AppTable is the table that holds the app relation/edge.
+	AppTable = "user"
+	// AppInverseTable is the table name for the App entity.
+	// It exists in this package in order to avoid circular dependency with the "app" package.
+	AppInverseTable = "app"
+	// AppColumn is the table column denoting the app relation/edge.
+	AppColumn = "app_id"
 )
 
 // Columns holds all SQL columns for user fields.
 var Columns = []string{
 	FieldID,
+	FieldAppID,
 	FieldFirstname,
 	FieldLastname,
 	FieldEmail,
@@ -72,6 +85,11 @@ func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
+// ByAppID orders the results by the app_id field.
+func ByAppID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAppID, opts...).ToFunc()
+}
+
 // ByFirstname orders the results by the firstname field.
 func ByFirstname(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldFirstname, opts...).ToFunc()
@@ -105,4 +123,18 @@ func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 // ByUpdatedAt orders the results by the updated_at field.
 func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
+}
+
+// ByAppField orders the results by app field.
+func ByAppField(field string, opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newAppStep(), sql.OrderByField(field, opts...))
+	}
+}
+func newAppStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(AppInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.M2O, true, AppTable, AppColumn),
+	)
 }

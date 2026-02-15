@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"dvarapala/ent/app"
 	"dvarapala/ent/user"
 	"errors"
 	"fmt"
@@ -73,6 +74,7 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
+			app.Table:  app.ValidColumn,
 			user.Table: user.ValidColumn,
 		})
 	})

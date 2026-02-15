@@ -6,6 +6,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 )
 
@@ -24,6 +25,7 @@ func (User) Annotations() []schema.Annotation {
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
+		field.Int("app_id"),
 		field.String("firstname"),
 		field.String("lastname"),
 		field.String("email").Unique(),
@@ -36,5 +38,14 @@ func (User) Fields() []ent.Field {
 
 // Edges of the User.
 func (User) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+		edge.From("app", App.Type).
+			Ref("users").
+			Unique().
+			Required().
+			Field("app_id").
+			Annotations(
+				entsql.OnDelete(entsql.Cascade),
+			),
+	}
 }

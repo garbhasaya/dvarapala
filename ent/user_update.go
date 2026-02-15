@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"dvarapala/ent/app"
 	"dvarapala/ent/predicate"
 	"dvarapala/ent/user"
 	"errors"
@@ -25,6 +26,20 @@ type UserUpdate struct {
 // Where appends a list predicates to the UserUpdate builder.
 func (_u *UserUpdate) Where(ps ...predicate.User) *UserUpdate {
 	_u.mutation.Where(ps...)
+	return _u
+}
+
+// SetAppID sets the "app_id" field.
+func (_u *UserUpdate) SetAppID(v int) *UserUpdate {
+	_u.mutation.SetAppID(v)
+	return _u
+}
+
+// SetNillableAppID sets the "app_id" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableAppID(v *int) *UserUpdate {
+	if v != nil {
+		_u.SetAppID(*v)
+	}
 	return _u
 }
 
@@ -125,9 +140,20 @@ func (_u *UserUpdate) SetUpdatedAt(v time.Time) *UserUpdate {
 	return _u
 }
 
+// SetApp sets the "app" edge to the App entity.
+func (_u *UserUpdate) SetApp(v *App) *UserUpdate {
+	return _u.SetAppID(v.ID)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_u *UserUpdate) Mutation() *UserMutation {
 	return _u.mutation
+}
+
+// ClearApp clears the "app" edge to the App entity.
+func (_u *UserUpdate) ClearApp() *UserUpdate {
+	_u.mutation.ClearApp()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -166,7 +192,18 @@ func (_u *UserUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *UserUpdate) check() error {
+	if _u.mutation.AppCleared() && len(_u.mutation.AppIDs()) > 0 {
+		return errors.New(`ent: clearing a required unique edge "User.app"`)
+	}
+	return nil
+}
+
 func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -199,6 +236,35 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
 	}
+	if _u.mutation.AppCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   user.AppTable,
+			Columns: []string{user.AppColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(app.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.AppIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   user.AppTable,
+			Columns: []string{user.AppColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(app.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{user.Label}
@@ -217,6 +283,20 @@ type UserUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *UserMutation
+}
+
+// SetAppID sets the "app_id" field.
+func (_u *UserUpdateOne) SetAppID(v int) *UserUpdateOne {
+	_u.mutation.SetAppID(v)
+	return _u
+}
+
+// SetNillableAppID sets the "app_id" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableAppID(v *int) *UserUpdateOne {
+	if v != nil {
+		_u.SetAppID(*v)
+	}
+	return _u
 }
 
 // SetFirstname sets the "firstname" field.
@@ -316,9 +396,20 @@ func (_u *UserUpdateOne) SetUpdatedAt(v time.Time) *UserUpdateOne {
 	return _u
 }
 
+// SetApp sets the "app" edge to the App entity.
+func (_u *UserUpdateOne) SetApp(v *App) *UserUpdateOne {
+	return _u.SetAppID(v.ID)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_u *UserUpdateOne) Mutation() *UserMutation {
 	return _u.mutation
+}
+
+// ClearApp clears the "app" edge to the App entity.
+func (_u *UserUpdateOne) ClearApp() *UserUpdateOne {
+	_u.mutation.ClearApp()
+	return _u
 }
 
 // Where appends a list predicates to the UserUpdate builder.
@@ -370,7 +461,18 @@ func (_u *UserUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *UserUpdateOne) check() error {
+	if _u.mutation.AppCleared() && len(_u.mutation.AppIDs()) > 0 {
+		return errors.New(`ent: clearing a required unique edge "User.app"`)
+	}
+	return nil
+}
+
 func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -419,6 +521,35 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if _u.mutation.AppCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   user.AppTable,
+			Columns: []string{user.AppColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(app.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.AppIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   user.AppTable,
+			Columns: []string{user.AppColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(app.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &User{config: _u.config}
 	_spec.Assign = _node.assignValues

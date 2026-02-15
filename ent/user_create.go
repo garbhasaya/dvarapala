@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"dvarapala/ent/app"
 	"dvarapala/ent/user"
 	"errors"
 	"fmt"
@@ -18,6 +19,12 @@ type UserCreate struct {
 	config
 	mutation *UserMutation
 	hooks    []Hook
+}
+
+// SetAppID sets the "app_id" field.
+func (_c *UserCreate) SetAppID(v int) *UserCreate {
+	_c.mutation.SetAppID(v)
+	return _c
 }
 
 // SetFirstname sets the "firstname" field.
@@ -86,6 +93,11 @@ func (_c *UserCreate) SetNillableUpdatedAt(v *time.Time) *UserCreate {
 	return _c
 }
 
+// SetApp sets the "app" edge to the App entity.
+func (_c *UserCreate) SetApp(v *App) *UserCreate {
+	return _c.SetAppID(v.ID)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_c *UserCreate) Mutation() *UserMutation {
 	return _c.mutation
@@ -137,6 +149,9 @@ func (_c *UserCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *UserCreate) check() error {
+	if _, ok := _c.mutation.AppID(); !ok {
+		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "User.app_id"`)}
+	}
 	if _, ok := _c.mutation.Firstname(); !ok {
 		return &ValidationError{Name: "firstname", err: errors.New(`ent: missing required field "User.firstname"`)}
 	}
@@ -157,6 +172,9 @@ func (_c *UserCreate) check() error {
 	}
 	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "User.updated_at"`)}
+	}
+	if len(_c.mutation.AppIDs()) == 0 {
+		return &ValidationError{Name: "app", err: errors.New(`ent: missing required edge "User.app"`)}
 	}
 	return nil
 }
@@ -211,6 +229,23 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(user.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
+	}
+	if nodes := _c.mutation.AppIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   user.AppTable,
+			Columns: []string{user.AppColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(app.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.AppID = nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
