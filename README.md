@@ -1,4 +1,4 @@
-# Dvarapala (gatekeeper)
+# Dvarapala
 
 A microservice providing functionality of authentication and authorisation.
 
@@ -280,3 +280,11 @@ Logs are written to both **stdout** and to a file named `api.log` located in the
 The project uses Docker volumes to persist data and logs outside the container:
 - **Database**: Stored in `./data/dvarapala.db`.
 - **Logs**: Stored in `./log/api.log`.
+
+## API specs
+
+https://jsonapi.org/format/1.2/
+
+## TODO
+
+- Pagination
