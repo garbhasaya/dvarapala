@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"dvarapala/ent"
-	"dvarapala/ent/user"
+	"keeper/ent"
+	"keeper/ent/user"
 )
 
 // UserRepository handles database operations for users.

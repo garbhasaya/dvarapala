@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"dvarapala/ent/migrate"
+	"keeper/ent/migrate"
 
 	atlasmigrate "ariga.io/atlas/sql/migrate"
 	"entgo.io/ent/dialect"

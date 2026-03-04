@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 
-	"dvarapala/ent"
+	"keeper/ent"
 )
 
 // AppRepository handles database operations for apps.

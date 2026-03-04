@@ -9,10 +9,10 @@ import (
 	"log"
 	"reflect"
 
-	"dvarapala/ent/migrate"
+	"keeper/ent/migrate"
 
-	"dvarapala/ent/app"
-	"dvarapala/ent/user"
+	"keeper/ent/app"
+	"keeper/ent/user"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"

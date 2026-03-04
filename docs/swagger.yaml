@@ -1,13 +1,5 @@
 basePath: /
 definitions:
-  dvarapala_pkg_render.Response:
-    properties:
-      data: {}
-      error:
-        type: string
-      status:
-        type: integer
-    type: object
   internal_app.App:
     properties:
       created_at:
@@ -113,11 +105,19 @@ definitions:
       updated_at:
         type: string
     type: object
+  keeper_pkg_render.Response:
+    properties:
+      data: {}
+      error:
+        type: string
+      status:
+        type: integer
+    type: object
 host: localhost:8080
 info:
   contact: {}
   description: This is a microservice for user management.
-  title: Dvarapala API
+  title: Keeper API
   version: "1.0"
 paths:
   /apps:
@@ -130,7 +130,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   items:
@@ -140,11 +140,11 @@ paths:
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: List all apps
@@ -168,7 +168,7 @@ paths:
           description: Created
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   $ref: '#/definitions/internal_app.App'
@@ -176,15 +176,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Create a new app
@@ -207,15 +207,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Delete app
@@ -236,7 +236,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   $ref: '#/definitions/internal_app.App'
@@ -244,15 +244,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Get app by ID
@@ -281,7 +281,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   $ref: '#/definitions/internal_app.App'
@@ -289,15 +289,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Update app
@@ -312,7 +312,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       summary: Check service health
       tags:
       - health
@@ -326,7 +326,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   items:
@@ -336,11 +336,11 @@ paths:
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: List all users
@@ -364,7 +364,7 @@ paths:
           description: Created
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   $ref: '#/definitions/internal_user.User'
@@ -372,15 +372,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Create a new user
@@ -403,15 +403,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Delete user
@@ -432,7 +432,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   $ref: '#/definitions/internal_user.User'
@@ -440,15 +440,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Get user by ID
@@ -477,7 +477,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   $ref: '#/definitions/internal_user.User'
@@ -485,15 +485,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       security:
       - Bearer: []
       summary: Update user
@@ -518,7 +518,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dvarapala_pkg_render.Response'
+            - $ref: '#/definitions/keeper_pkg_render.Response'
             - properties:
                 data:
                   $ref: '#/definitions/internal_user.AuthResponse'
@@ -526,11 +526,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dvarapala_pkg_render.Response'
+            $ref: '#/definitions/keeper_pkg_render.Response'
       summary: Authenticate user
       tags:
       - users

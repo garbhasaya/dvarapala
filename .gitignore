@@ -28,5 +28,5 @@ data/
 log/
 *.db
 *.db-journal
-dvarapala
+keeper
 coverage.html

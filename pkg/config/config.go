@@ -59,7 +59,7 @@ func Load() (*Config, error) {
 	v.SetDefault("SERVER.READ_TIMEOUT", 5*time.Second)
 	v.SetDefault("SERVER.WRITE_TIMEOUT", 10*time.Second)
 	v.SetDefault("SERVER.IDLE_TIMEOUT", 120*time.Second)
-	v.SetDefault("DB.PATH", "dvarapala.db")
+	v.SetDefault("DB.PATH", "keeper.db")
 	v.SetDefault("LOG.DIR", "log")
 	v.SetDefault("AUTH.JWT_SECRET", "a-very-secure-and-shared-secret-key")
 	v.SetDefault("AUTH.JWT_EXPIRY", 24*time.Hour)

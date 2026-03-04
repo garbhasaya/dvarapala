@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 
-	"dvarapala/ent"
+	"keeper/ent"
 )
 
 // AppService defines the business logic for apps.

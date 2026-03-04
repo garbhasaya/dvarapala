@@ -4,8 +4,8 @@ package hook
 
 import (
 	"context"
-	"dvarapala/ent"
 	"fmt"
+	"keeper/ent"
 )
 
 // The AppFunc type is an adapter to allow the use of ordinary

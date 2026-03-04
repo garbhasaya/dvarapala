@@ -5,11 +5,11 @@ package enttest
 import (
 	"context"
 
-	"dvarapala/ent"
+	"keeper/ent"
 	// required by schema hooks.
-	_ "dvarapala/ent/runtime"
+	_ "keeper/ent/runtime"
 
-	"dvarapala/ent/migrate"
+	"keeper/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

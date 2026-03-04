@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"dvarapala/ent"
-	"dvarapala/ent/migrate"
+	"keeper/ent"
+	"keeper/ent/migrate"
 
 	_ "github.com/mattn/go-sqlite3"
 )

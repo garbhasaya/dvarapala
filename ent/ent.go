@@ -4,10 +4,10 @@ package ent
 
 import (
 	"context"
-	"dvarapala/ent/app"
-	"dvarapala/ent/user"
 	"errors"
 	"fmt"
+	"keeper/ent/app"
+	"keeper/ent/user"
 	"reflect"
 	"sync"
 

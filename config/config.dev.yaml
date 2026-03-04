@@ -2,7 +2,7 @@ ENVIRONMENT: dev
 SERVER:
   HOST: "localhost:8080"
 DB:
-  PATH: "data/dvarapala_dev.db"
+  PATH: "data/keeper_dev.db"
 LOG:
   DIR: "log_dev"
 AUTH:

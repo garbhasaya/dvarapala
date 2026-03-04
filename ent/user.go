@@ -3,9 +3,9 @@
 package ent
 
 import (
-	"dvarapala/ent/app"
-	"dvarapala/ent/user"
 	"fmt"
+	"keeper/ent/app"
+	"keeper/ent/user"
 	"strings"
 	"time"
 

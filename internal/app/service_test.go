@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"dvarapala/ent/enttest"
+	"keeper/ent/enttest"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"

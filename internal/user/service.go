@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"dvarapala/ent"
-	"dvarapala/pkg/auth"
+	"keeper/ent"
+	"keeper/pkg/auth"
 
 	"golang.org/x/crypto/bcrypt"
 )

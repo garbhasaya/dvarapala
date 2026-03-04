@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"dvarapala/ent/predicate"
-	"dvarapala/ent/user"
+	"keeper/ent/predicate"
+	"keeper/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

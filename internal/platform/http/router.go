@@ -3,11 +3,11 @@ package http
 import (
 	"time"
 
-	_ "dvarapala/docs" // Import generated docs
-	"dvarapala/internal/app"
-	"dvarapala/internal/user"
-	"dvarapala/pkg/auth"
-	"dvarapala/pkg/config"
+	_ "keeper/docs" // Import generated docs
+	"keeper/internal/app"
+	"keeper/internal/user"
+	"keeper/pkg/auth"
+	"keeper/pkg/config"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

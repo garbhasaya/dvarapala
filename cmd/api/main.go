@@ -12,16 +12,16 @@ import (
 	"syscall"
 	"time"
 
-	"dvarapala/docs"
-	"dvarapala/internal/app"
-	"dvarapala/internal/db"
-	platformhttp "dvarapala/internal/platform/http"
-	"dvarapala/internal/user"
-	"dvarapala/pkg/auth"
-	"dvarapala/pkg/config"
+	"keeper/docs"
+	"keeper/internal/app"
+	"keeper/internal/db"
+	platformhttp "keeper/internal/platform/http"
+	"keeper/internal/user"
+	"keeper/pkg/auth"
+	"keeper/pkg/config"
 )
 
-// @title Dvarapala API
+// @title Keeper API
 // @version 1.0
 // @description This is a microservice for user management.
 // @host localhost:8080

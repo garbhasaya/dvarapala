@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"dvarapala/pkg/render"
+	"keeper/pkg/render"
 )
 
 type contextKey string

@@ -1,4 +1,4 @@
-# Dvarapala
+# Keeper
 
 A microservice providing functionality of authentication and authorisation.
 
@@ -191,10 +191,10 @@ make restart
 
 ## Database Persistence
 
-The SQLite database is stored at `/app/data/dvarapala.db` inside the container. This path is persisted using a bind mount to the local `./data` directory in the project root.
+The SQLite database is stored at `/app/data/keeper.db` inside the container. This path is persisted using a bind mount to the local `./data` directory in the project root.
 
-- **Host Path**: `./data/dvarapala.db`
-- **Container Path**: `/app/data/dvarapala.db`
+- **Host Path**: `./data/keeper.db`
+- **Container Path**: `/app/data/keeper.db`
 - **Environment Variable**: `DB_PATH`
 
 The database initialization is fully aligned with the Ent migration setup. On every startup, the application verifies the schema against the generated Ent code and applies any necessary changes to the SQLite file, ensuring the physical database always matches your versioned migration files.
@@ -230,7 +230,7 @@ The application can be configured using environment variables or YAML files (`co
 | `ENVIRONMENT` | Deployment environment (`dev`, `production`) | `production` |
 | `SERVER_ADDR` | Internal network address the server binds to | `:8080` |
 | `SERVER_HOST` | Public-facing host/port for Swagger documentation | `localhost:8080` |
-| `DB_PATH` | Path to the SQLite database file | `data/dvarapala.db` |
+| `DB_PATH` | Path to the SQLite database file | `data/keeper.db` |
 | `LOG_DIR` | Directory where log files are stored | `log` |
 | `AUTH_JWT_SECRET` | Secret key used for signing JWT tokens | `very-secret-key` |
 | `AUTH_JWT_EXPIRY` | Expiration time for JWT tokens | `24h` |
@@ -278,7 +278,7 @@ Logs are written to both **stdout** and to a file named `api.log` located in the
 ## Persistence
 
 The project uses Docker volumes to persist data and logs outside the container:
-- **Database**: Stored in `./data/dvarapala.db`.
+- **Database**: Stored in `./data/keeper.db`.
 - **Logs**: Stored in `./log/api.log`.
 
 ## API specs

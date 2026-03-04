@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"dvarapala/ent/app"
 	"fmt"
+	"keeper/ent/app"
 	"strings"
 	"time"
 

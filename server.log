@@ -1,4 +1,4 @@
-{"time":"2026-02-14T19:37:56.027128086+05:30","level":"INFO","msg":"opening sqlite connection","path":"data/dvarapala.db"}
+{"time":"2026-02-14T19:37:56.027128086+05:30","level":"INFO","msg":"opening sqlite connection","path":"data/keeper.db"}
 {"time":"2026-02-14T19:37:56.027256046+05:30","level":"INFO","msg":"running auto migration"}
 {"time":"2026-02-14T19:37:56.028793312+05:30","level":"INFO","msg":"database initialization completed successfully"}
 {"time":"2026-02-14T19:37:56.029144319+05:30","level":"INFO","msg":"starting server","addr":":8080","env":"production"}

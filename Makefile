@@ -114,14 +114,14 @@ migrate-gen:
 
 migrate-apply:
 	docker-compose run --rm atlas migrate apply \
-		--url "sqlite:///data/dvarapala.db?_fk=1" \
+		--url "sqlite:///data/keeper.db?_fk=1" \
 		--dir "file://ent/migrate/migrations" \
 		--allow-dirty
 
 # Run SQL query against the database
 sql:
 	@if [ -z "$(query)" ]; then echo "Usage: make sql query=\"SQL_QUERY\""; exit 1; fi
-	sqlite3 data/dvarapala.db "$(query)"
+	sqlite3 data/keeper.db "$(query)"
 
 # Clean up containers, images, and volumes
 clean:

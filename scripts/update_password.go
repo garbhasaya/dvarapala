@@ -21,7 +21,7 @@ func main() {
 	email := os.Args[1]
 	newPassword := os.Args[2]
 
-	db, err := sql.Open("sqlite3", "./data/dvarapala.db")
+	db, err := sql.Open("sqlite3", "./data/keeper.db")
 	if err != nil {
 		log.Fatal(err)
 	}

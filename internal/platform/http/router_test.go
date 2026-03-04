@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"dvarapala/internal/app"
-	"dvarapala/internal/user"
-	"dvarapala/pkg/auth"
-	"dvarapala/pkg/config"
+	"keeper/internal/app"
+	"keeper/internal/user"
+	"keeper/pkg/auth"
+	"keeper/pkg/config"
 
 	"github.com/stretchr/testify/assert"
 )

@@ -4,10 +4,10 @@ package ent
 
 import (
 	"context"
-	"dvarapala/ent/app"
-	"dvarapala/ent/predicate"
-	"dvarapala/ent/user"
 	"fmt"
+	"keeper/ent/app"
+	"keeper/ent/predicate"
+	"keeper/ent/user"
 	"math"
 
 	"entgo.io/ent"

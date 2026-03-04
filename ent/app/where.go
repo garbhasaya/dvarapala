@@ -3,7 +3,7 @@
 package app
 
 import (
-	"dvarapala/ent/predicate"
+	"keeper/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"

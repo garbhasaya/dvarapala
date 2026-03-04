@@ -18,7 +18,7 @@ COPY . .
 
 # Build the application
 # CGO_ENABLED=1 is required for the standard SQLite driver
-RUN CGO_ENABLED=1 CGO_CFLAGS="-D_LARGEFILE64_SOURCE" GOOS=linux go build -a -installsuffix cgo -o dvarapala ./cmd/api/main.go
+RUN CGO_ENABLED=1 CGO_CFLAGS="-D_LARGEFILE64_SOURCE" GOOS=linux go build -a -installsuffix cgo -o keeper ./cmd/api/main.go
 
 # Final stage
 FROM alpine:latest
@@ -28,10 +28,10 @@ RUN apk --no-cache add ca-certificates sqlite-libs
 WORKDIR /app
 
 # Copy the binary from the builder stage
-COPY --from=builder /app/dvarapala .
+COPY --from=builder /app/keeper .
 
 # Expose port 8080
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./dvarapala"]
+CMD ["./keeper"]

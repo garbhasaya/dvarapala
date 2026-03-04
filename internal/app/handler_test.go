@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"dvarapala/pkg/render"
+	"keeper/pkg/render"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

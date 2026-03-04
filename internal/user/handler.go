@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"dvarapala/pkg/auth"
-	"dvarapala/pkg/render"
+	"keeper/pkg/auth"
+	"keeper/pkg/render"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
