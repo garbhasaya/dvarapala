@@ -90,12 +90,12 @@ To ensure codebase health and consistency, the following steps **must** be compl
 2.  **Structured Logging**: Add or update structured logging (using `slog`) to capture important events, business logic milestones, and error conditions.
 3.  **Write Unit Tests**: Every new feature or bug fix must include corresponding unit tests (e.g., `*_test.go`).
 4.  **Update Makefile**: If new development commands are required, add them to the `Makefile` and update the documentation accordingly.
-5.  **Run Formatter**: Ensure code style and imports are consistent by running `make fmt`.
+5.  **Run Formatter**: Every code change MUST be formatted to ensure consistent code style and import management. Run `make fmt` after any modification to source files.
 6.  **Run Linter**: Ensure code quality by running `make lint` after code and test changes.
 7.  **Update Swagger Documentation**: If any API endpoints are added or modified, regenerate documentation using `make swag`.
 8.  **Update README.md**: Ensure any new features, endpoints, or configuration changes are documented in `README.md`.
 9.  **Update GEMINI.md**: Ensure this project guide is updated to reflect any changes in architecture, workflows, or documentation standards.
-10.  **Run All Tests**: Verify that all tests pass by running `make test`.
+10.  **Run All Tests**: Verify that all tests pass by running `make test`. (Note: `make test` automatically runs `make fmt` as a prerequisite).
 11.  **Custom Scripts**: You **MUST** always run any custom script using the `make run-script` command to ensure a consistent environment and proper dependency handling.
 
 ### Common Commands (Makefile)

@@ -241,4 +241,3 @@ func BenchmarkService_Authenticate(b *testing.B) {
 		})
 	}
 }
-
