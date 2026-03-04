@@ -66,6 +66,7 @@ func Load() (*Config, error) {
 	v.SetDefault("CORS.ALLOWED_ORIGINS", []string{"*"})
 
 	// Environment variables
+	v.SetEnvPrefix("KEEPER")
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	v.BindEnv("DB.PATH", "DB_PATH")
 	v.AutomaticEnv()
